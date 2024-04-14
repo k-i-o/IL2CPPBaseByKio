@@ -5,6 +5,8 @@ New Base By Kio For Il2CPP Unity Game Hacking
 Youtube Channel: https://www.youtube.com/@kiocode
 
 ### Feature already implemented:
+- ImGui
+- Hooking
 - Basic Aimbot (also with FOV)
 - ESP
 - Box ESP
