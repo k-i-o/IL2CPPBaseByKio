@@ -2,10 +2,10 @@
 #include <string>
 #include <sstream>
 
-namespace render
+namespace Render
 {
-
-	auto add_text(ImVec2 pos, char* text, ImColor color) -> void
+	/*
+	void AddText(ImVec2 pos, char* text, ImColor color)
 	{
 		auto DrawList = ImGui::GetForegroundDrawList();
 		auto wText = text;
@@ -114,5 +114,5 @@ namespace render
 			i++;
 		}
 		return y;
-	}
+	}*/
 }

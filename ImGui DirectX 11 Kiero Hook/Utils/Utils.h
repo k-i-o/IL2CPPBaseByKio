@@ -121,19 +121,19 @@ namespace Utils
 	}
 
 
-	Unity::CGameObject* GetNearestPlayer()
+	Unity::CGameObject* GetNearestPlayer(std::vector<Unity::CGameObject*> list, Unity::CGameObject* localplayer)
 	{
 		Unity::CGameObject* nearestPlayer = nullptr;
 		float nearestDistance = FLT_MAX;
 
-		for (int i = 0; i < Variables::CheatVariables::PlayersList.size(); i++)
+		for (int i = 0; i < list.size(); i++)
 		{
-			Unity::CGameObject* currentPlayer = Variables::CheatVariables::PlayersList[i];
+			Unity::CGameObject* currentPlayer = list[i];
 
 			if (!currentPlayer)
 				continue;
 
-			float distance = GetDistance(Variables::CheatVariables::LocalPlayer->GetTransform()->GetPosition(), currentPlayer->GetTransform()->GetPosition());
+			float distance = GetDistance(localplayer->GetTransform()->GetPosition(), currentPlayer->GetTransform()->GetPosition());
 			if (distance < nearestDistance)
 			{
 				nearestDistance = distance;

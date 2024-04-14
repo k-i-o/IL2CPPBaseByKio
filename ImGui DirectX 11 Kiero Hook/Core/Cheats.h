@@ -7,6 +7,7 @@
 #include <Utils/SDK.h>
 #include <Utils/Themes.h>
 #include <Utils/Utils.h>
+#include <Utils/Rendering.hpp>
 
 using namespace Variables;
 
@@ -20,7 +21,7 @@ void DrawMouse() {
 		ImGui::GetForegroundDrawList()->AddCircleFilled(ImGui::GetMousePos(), 4, color);
 		break;
 	case 1:
-		render::DrawOutlinedTextForeground(gameFont, ImVec2(System::MousePos.x, System::MousePos.y), 13.0f, color, false, "X");
+		//Render::DrawOutlinedTextForeground(gameFont, ImVec2(System::MousePos.x, System::MousePos.y), 13.0f, color, false, "X");
 		break;
 	case 2:
 		if (!ImGui::GetIO().MouseDrawCursor) {

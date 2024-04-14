@@ -306,7 +306,7 @@ inline Vector3 operator/(float lhs, const Vector3& rhs)
 class __declspec(align(16)) Vector3Aligned : public Vector3
 {
 public:
-	inline Vector3Aligned(void) {};
+	inline Vector3Aligned(void) { };
 	inline Vector3Aligned(float X, float Y, float Z)
 	{
 		Init(X, Y, Z);

@@ -1,0 +1,359 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "runs": [
+    {
+      "results": [
+        {
+          "ruleId": "C6031",
+          "message": {
+            "text": "Return value ignored: 'sscanf'."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/imgui/imgui_widgets.cpp"
+                },
+                "region": {
+                  "startLine": 1838,
+                  "startColumn": 9,
+                  "endLine": 1838,
+                  "endColumn": 29
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "ImGui::DataTypeApplyOpFromText",
+                  "decoratedName": "?DataTypeApplyOpFromText@ImGui@@YA_NPEBD0HPEAX0@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C6031",
+          "message": {
+            "text": "Return value ignored: 'sscanf'."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/imgui/imgui_widgets.cpp"
+                },
+                "region": {
+                  "startLine": 1844,
+                  "startColumn": 9,
+                  "endLine": 1844,
+                  "endColumn": 30
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "ImGui::DataTypeApplyOpFromText",
+                  "decoratedName": "?DataTypeApplyOpFromText@ImGui@@YA_NPEBD0HPEAX0@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C6031",
+          "message": {
+            "text": "Return value ignored: 'sscanf'."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/imgui/imgui_widgets.cpp"
+                },
+                "region": {
+                  "startLine": 4304,
+                  "startColumn": 17,
+                  "endLine": 4304,
+                  "endColumn": 132
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "ImGui::ColorEdit4",
+                  "decoratedName": "?ColorEdit4@ImGui@@YA_NPEBDQEAMH@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C6031",
+          "message": {
+            "text": "Return value ignored: 'sscanf'."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/imgui/imgui_widgets.cpp"
+                },
+                "region": {
+                  "startLine": 4306,
+                  "startColumn": 17,
+                  "endLine": 4306,
+                  "endColumn": 106
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "ImGui::ColorEdit4",
+                  "decoratedName": "?ColorEdit4@ImGui@@YA_NPEBDQEAMH@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C6011",
+          "message": {
+            "text": "Dereferencing NULL pointer 'window'. See line 6095 for an earlier location where this can occur"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/imgui/imgui_widgets.cpp"
+                },
+                "region": {
+                  "startLine": 6120,
+                  "startColumn": 5
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "ImGui::EndMenuBar",
+                  "decoratedName": "?EndMenuBar@ImGui@@YAXXZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/imgui/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 6094,
+                            "startColumn": 18
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/imgui/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 6095,
+                            "startColumn": 15
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/imgui/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 6097,
+                            "startColumn": 19
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/imgui/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 6100,
+                            "startColumn": 109
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/imgui/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 6102,
+                            "startColumn": 22
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/imgui/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 6103,
+                            "startColumn": 49
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/imgui/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 6105,
+                            "startColumn": 129
+                          }
+                        },
+                        "message": {
+                          "text": "'window' may be NULL (Skip this branch)"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ]
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/imgui/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 6120,
+                            "startColumn": 5
+                          }
+                        },
+                        "message": {
+                          "text": "Skip this loop, (assume '<branch condition>' is false)"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ]
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/imgui/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 6120,
+                            "startColumn": 5
+                          }
+                        },
+                        "message": {
+                          "text": "'window' is dereferenced, but may still be NULL"
+                        }
+                      },
+                      "kinds": [
+                        "usage"
+                      ],
+                      "importance": "essential"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tool": {
+        "driver": {
+          "name": "PREfast",
+          "fullName": "PREfast Code Analysis",
+          "version": "14.39.33523.0",
+          "informationUri": "https://aka.ms/cpp/ca"
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/imgui/imgui_widgets.cpp"
+          },
+          "roles": [
+            "analysisTarget",
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "beecc4c4f02f76ec05637bfa3d97d3fbe5c178c7200b90567f5fc86d04dcb6bd"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///e:/projects/il2cppbasebykio/imgui directx 11 kiero hook/libraries/imgui/imgui.h"
+          },
+          "hashes": {
+            "sha-256": "a11cd43ac9ed37749dcef4ae73f80a807701cd99d0ebcb3372a0be7775a47172"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///e:/projects/il2cppbasebykio/imgui directx 11 kiero hook/libraries/imgui/imconfig.h"
+          },
+          "hashes": {
+            "sha-256": "31c62fea414638c902f9d0322bc6316f5c32049077c2d0ea7f30b578f203aeb3"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///e:/projects/il2cppbasebykio/imgui directx 11 kiero hook/libraries/imgui/imgui_internal.h"
+          },
+          "hashes": {
+            "sha-256": "ab9b5812e307ce6b9a9a8cc180d2c42352ad0de3c7eba53b2a603004353876d3"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///e:/projects/il2cppbasebykio/imgui directx 11 kiero hook/libraries/imgui/imstb_textedit.h"
+          },
+          "hashes": {
+            "sha-256": "52dc329c0eb1b2d95237d62e77601084260314a75791d16acc11f097a426f4b8"
+          }
+        }
+      ]
+    }
+  ]
+}

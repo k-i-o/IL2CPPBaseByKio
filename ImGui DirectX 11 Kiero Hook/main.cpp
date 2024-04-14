@@ -219,8 +219,8 @@ static HRESULT __stdcall hkPresent(IDXGISwapChain* pSwapChain, UINT SyncInterval
 	#pragma region Watermark
 		//if (vars::watermark)
 		//{
-		render::DrawOutlinedText(gameFont, ImVec2(System::screenCenter.x, System::screenSize.y - 20), 13.0f, CheatMenuVariables::RainbowColor, true, Prefix.c_str());
-		render::DrawOutlinedText(gameFont, ImVec2(System::screenCenter.x, 5), 13.0f, CheatMenuVariables::RainbowColor, true, "[ %.1f FPS ]", ImGui::GetIO().Framerate);
+		/*Render::DrawOutlinedText(gameFont, ImVec2(System::screenCenter.x, System::screenSize.y - 20), 13.0f, CheatMenuVariables::RainbowColor, true, Prefix.c_str());
+		Render::DrawOutlinedText(gameFont, ImVec2(System::screenCenter.x, 5), 13.0f, CheatMenuVariables::RainbowColor, true, "[ %.1f FPS ]", ImGui::GetIO().Framerate);*/
 		//}
 	#pragma endregion
 

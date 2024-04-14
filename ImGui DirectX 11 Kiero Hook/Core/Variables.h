@@ -39,7 +39,9 @@ namespace Variables
 		bool ShowMenu = false;
 
 		ImVec4 Rainbow = ImVec4(0.0f, 0.0f, 0.0f, 0.0f); // Global rainbow color
-		ImColor RainbowColor = ImColor(255.0f / 255, 255.0f / 255, 255.0f / 255); // Global rainbow color		
+		ImColor RainbowColor = ImColor(255.0f / 255, 255.0f / 255, 255.0f / 255); // Global rainbow color
+
+		bool ShowInspector = false;
 		
 		bool ShowMouse = true;
 		bool RainbowMouse = false;

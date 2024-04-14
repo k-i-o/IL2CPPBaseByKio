@@ -1,0 +1,892 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "runs": [
+    {
+      "results": [
+        {
+          "ruleId": "C6387",
+          "message": {
+            "text": "'g_methodsTable' could be '0':  this does not adhere to the specification for the function 'memcpy'. "
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                },
+                "region": {
+                  "startLine": 340,
+                  "startColumn": 7,
+                  "endLine": 340,
+                  "endColumn": 60
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "kiero::init",
+                  "decoratedName": "?init@kiero@@YA?AW4Enum@Status@1@W42RenderType@1@@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 50,
+                            "startColumn": 19
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 55,
+                            "startColumn": 18
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 57,
+                            "startColumn": 39
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 59,
+                            "startColumn": 15
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 60,
+                            "startColumn": 23
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 61,
+                            "startColumn": 22
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 62,
+                            "startColumn": 28
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 63,
+                            "startColumn": 27
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 64,
+                            "startColumn": 27
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 65,
+                            "startColumn": 26
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 66,
+                            "startColumn": 22
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 67,
+                            "startColumn": 24
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 68,
+                            "startColumn": 30
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 69,
+                            "startColumn": 29
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 70,
+                            "startColumn": 30
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 71,
+                            "startColumn": 24
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 73,
+                            "startColumn": 21
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 75,
+                            "startColumn": 9
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 77,
+                            "startColumn": 20
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 158,
+                            "startColumn": 25
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 268,
+                            "startColumn": 25
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 271,
+                            "startColumn": 13
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 272,
+                            "startColumn": 65
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 279,
+                            "startColumn": 11
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 280,
+                            "startColumn": 103
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 287,
+                            "startColumn": 23
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 288,
+                            "startColumn": 29
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 290,
+                            "startColumn": 19
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 291,
+                            "startColumn": 27
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 292,
+                            "startColumn": 29
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 294,
+                            "startColumn": 20
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 295,
+                            "startColumn": 22
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 296,
+                            "startColumn": 23
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 297,
+                            "startColumn": 28
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 298,
+                            "startColumn": 23
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 299,
+                            "startColumn": 33
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 300,
+                            "startColumn": 24
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 302,
+                            "startColumn": 22
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 303,
+                            "startColumn": 22
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 304,
+                            "startColumn": 24
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 306,
+                            "startColumn": 26
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 307,
+                            "startColumn": 30
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 308,
+                            "startColumn": 30
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 309,
+                            "startColumn": 31
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 310,
+                            "startColumn": 31
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 311,
+                            "startColumn": 32
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 312,
+                            "startColumn": 28
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 313,
+                            "startColumn": 30
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 314,
+                            "startColumn": 25
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 316,
+                            "startColumn": 21
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 317,
+                            "startColumn": 19
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 318,
+                            "startColumn": 26
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 332,
+                            "startColumn": 202
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 339,
+                            "startColumn": 20
+                          }
+                        },
+                        "message": {
+                          "text": "'g_methodsTable' may be NULL"
+                        }
+                      },
+                      "kinds": [
+                        "declaration"
+                      ],
+                      "importance": "essential"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 340,
+                            "startColumn": 13
+                          }
+                        },
+                        "message": {
+                          "text": "'g_methodsTable' is an In/Out argument to 'memcpy' (declared at c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.39.33519\\include\\vcruntime_string.h:43)"
+                        }
+                      },
+                      "kinds": [
+                        "declaration"
+                      ]
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+                          },
+                          "region": {
+                            "startLine": 340,
+                            "startColumn": 13
+                          }
+                        },
+                        "message": {
+                          "text": "'g_methodsTable' should not be NULL, because this is not consistent with the SAL annotation on 'memcpy'"
+                        }
+                      },
+                      "kinds": [
+                        "usage"
+                      ],
+                      "importance": "essential"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tool": {
+        "driver": {
+          "name": "PREfast",
+          "fullName": "PREfast Code Analysis",
+          "version": "14.39.33523.0",
+          "informationUri": "https://aka.ms/cpp/ca"
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///E:/Projects/IL2CPPBaseByKio/ImGui DirectX 11 Kiero Hook/Libraries/kiero/kiero.cpp"
+          },
+          "roles": [
+            "analysisTarget",
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "d43faea708d1ed48ee95b79c901a9c1f6f45615ca0cbb1e94b72f954424ca0b0"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///e:/projects/il2cppbasebykio/imgui directx 11 kiero hook/libraries/kiero/kiero.h"
+          },
+          "hashes": {
+            "sha-256": "e808a268029d43f1c3a84fd1458e5d10a02827a79f38d5998de577f23e6c2271"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///e:/projects/il2cppbasebykio/imgui directx 11 kiero hook/libraries/kiero/minhook/include/minhook.h"
+          },
+          "hashes": {
+            "sha-256": "f06439ec0d9b9f39beab715ac4fee97c31376248ba9338e83c18fd2099aa797b"
+          }
+        }
+      ]
+    }
+  ]
+}
