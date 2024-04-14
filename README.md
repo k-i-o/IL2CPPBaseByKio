@@ -33,5 +33,7 @@ BEFORE BUILD MAKE SURE OF THESE VISUAL STUDIO CONFIG
 
 ## Credits
 SneakyEvil For The Resolver - https://github.com/sneakyevil/IL2CPP_Resolver &
+
 RDBO For His ImGui DX11 Hook - https://github.com/rdbo/ImGui-DirectX-11-Kiero-Hook &
+
 Idol For His First Base - https://github.com/IdolTheDev/Il2CPP-Base
