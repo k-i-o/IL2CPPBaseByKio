@@ -54,6 +54,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Core\CheatFns.h" />
     <ClInclude Include="Core\Cheats.h" />
     <ClInclude Include="Core\HooksFunctions.h" />
     <ClInclude Include="Core\InternalGameFunctions.h" />
@@ -118,7 +119,6 @@
     <ClInclude Include="Libraries\Vectors\vec.h" />
     <ClInclude Include="Libraries\Vectors\vec2.h" />
     <ClInclude Include="Utils\includes.h" />
-    <ClInclude Include="Utils\Rendering.hpp" />
     <ClInclude Include="Utils\SDK.h" />
     <ClInclude Include="Utils\Themes.h" />
     <ClInclude Include="Utils\Utils.h" />

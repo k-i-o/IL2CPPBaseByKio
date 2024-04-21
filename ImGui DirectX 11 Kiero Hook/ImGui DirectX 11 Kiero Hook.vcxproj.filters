@@ -39,7 +39,6 @@
     <ClInclude Include="Core\Cheats.h" />
     <ClInclude Include="Core\HooksFunctions.h" />
     <ClInclude Include="Core\InternalGameFunctions.h" />
-    <ClInclude Include="Core\Variables.h" />
     <ClInclude Include="DumpedFiles\il2cpp.h" />
     <ClInclude Include="Libraries\Fonts\fa_solid_900.h" />
     <ClInclude Include="Libraries\Fonts\Font.h" />
@@ -100,10 +99,11 @@
     <ClInclude Include="Libraries\Imgui_notify.h" />
     <ClInclude Include="Libraries\PaternScan.hpp" />
     <ClInclude Include="Utils\includes.h" />
-    <ClInclude Include="Utils\Rendering.hpp" />
     <ClInclude Include="Utils\SDK.h" />
     <ClInclude Include="Utils\Themes.h" />
     <ClInclude Include="Utils\Utils.h" />
+    <ClInclude Include="Core\CheatFns.h" />
+    <ClInclude Include="Core\Variables.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Libraries\kiero\minhook\dll_resources\MinHook.def" />
