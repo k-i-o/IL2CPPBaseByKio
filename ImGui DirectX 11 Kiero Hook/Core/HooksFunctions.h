@@ -9,36 +9,28 @@
 #include <Libraries/Vectors/vec.h>
 #include <Libraries/Vectors/vec2.h>
 
+using namespace Variables;
 
-
-// DELETE THAT IF DO YOU WANT ITS JUST AN EXAMPLE
-class FieldExample
+namespace GameFunctions
 {
-public:
-	float speed;
-	float health;
-};
-
-class ExampleClass
-{
-public: 
-	FieldExample fields;
-};
-
+	UnityEngine_Shader_o* UnityEngine_Shader__Find(Unity::System_String* name)
+	{
+		UnityEngine_Shader_o* (UNITY_CALLING_CONVENTION t)(Unity::System_String*);
+		return reinterpret_cast<decltype(t)>(Offsets::UnityEngineShader__FindShader_Offset)(name);
+	}
+}
 
 namespace HooksFunctions
 {
-	void(UNITY_CALLING_CONVENTION YouOriginalClass__MethodName)(ExampleClass*);
-	void YouOriginalClass__MethodName_hook(ExampleClass* _this)
-	{
-		if (_this != nullptr) {
-			// if SuperSpeed is enabled for example
-			_this->fields.speed = 100.0f;
+	// EXAMPLE
+	//void(UNITY_CALLING_CONVENTION Health__TakeDamage)(Health_o*, int32_t, UnityEngine_Vector3_o, System_String_o*, uint8_t, System_String_o*);
+	//void Health__TakeDamage_hook(Health_o* _this, int32_t _damage, UnityEngine_Vector3_o _position, System_String_o* _name, uint8_t _weaponSpriteIndex, System_String_o* steamIdData)
+	//{
+	//	if (_this != nullptr) {
 
-			// if GodMode is enabled for example
-			_this->fields.health = 10000.0f;
-		}
+	//		if(CheatMenuVariables::GodMode) _damage = 0;
+	//	}
 
-		return YouOriginalClass__MethodName(_this);
-	}
+	//	return Health__TakeDamage(_this, _damage, _position, _name, _weaponSpriteIndex, steamIdData);
+	//}
 }

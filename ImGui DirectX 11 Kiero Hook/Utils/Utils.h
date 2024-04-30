@@ -39,7 +39,7 @@ namespace Utils
 			return false;
 		}
 
-		if (buffer.z > 0.0f)
+		if (buffer.z > 0.0f) 
 		{
 			screen = Vector2(buffer.x, Variables::System::ScreenSize.y - buffer.y);
 		}

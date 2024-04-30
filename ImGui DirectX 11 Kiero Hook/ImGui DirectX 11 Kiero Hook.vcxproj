@@ -54,7 +54,6 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Core\CheatFns.h" />
     <ClInclude Include="Core\Cheats.h" />
     <ClInclude Include="Core\HooksFunctions.h" />
     <ClInclude Include="Core\InternalGameFunctions.h" />
@@ -134,7 +133,7 @@
     <ProjectGuid>{04B17470-CB82-4724-904B-25445926AB86}</ProjectGuid>
     <RootNamespace>ImGuiDirectX11KieroHook</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>IL2CPPCheatsBase</ProjectName>
+    <ProjectName>IL2CPPBaseKio</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

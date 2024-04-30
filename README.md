@@ -1,5 +1,4 @@
 # Il2CPP-Base-By-Kio
-## 🌟 Star the repo to support me :D
 
 New Base By Kio For Il2CPP Unity Game Hacking
 

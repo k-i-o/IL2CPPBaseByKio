@@ -10,21 +10,21 @@ namespace Variables
 
 	namespace System 
 	{
-		bool init = false;
-		bool initil2cpp = false;
+		bool Init = false;
+		bool InitIL2Cpp = false;
 
 		POINT MousePos = { 0, 0 };
 
 		inline static UINT vps = 1;
 		Vector2 ScreenSize = { 0, 0 };
 		Vector2 ScreenCenter = { 0, 0 };
-		D3D11_VIEWPORT viewport;
+		D3D11_VIEWPORT Viewport;
 	}
 
 	namespace Offsets
 	{
 		uintptr_t UnityEngineShader__FindShader_Offset = 0x0;
-		uintptr_t YouOriginalClass__MethodName_Offset = 0x0;
+		//uintptr_t Health__TakeDamage_Offset = 0x0;
 	}
 
 	namespace CheatVariables 
@@ -35,10 +35,10 @@ namespace Variables
 		Unity::CGameObject* TargetPlayer = NULL;
 		ImColor TargetPlayerColor = ImColor(255, 0, 0);
 
-		UnityEngine_Shader_o* ChamsShader; // when you will put your il2cpp.h inside DumpedFiles folder it will works
+		UnityEngine_Shader_o* ChamsShader;
 
-		static DWORD lastShotTime = 0;
-		static DWORD lasttick = 0;
+		static DWORD LastShotTime = 0;
+		static DWORD LastTick = 0;
 	}
 
 	namespace CheatMenuVariables {
@@ -55,11 +55,6 @@ namespace Variables
 		bool RainbowMouse = false;
 		ImColor MouseColor = ImColor(255.0f / 255, 255.0f / 255, 255.0f / 255); 
 		int MouseType = 0;
-
-		bool EnableAimbot = false;
-		bool AimbotFOVCheck = false;
-		float AimbotFOV = 100.0f;
-		float AimbotSmoothness = 1.0f;
 
 		bool Crosshair = false;
 		bool RainbowCrosshair = false;
@@ -80,32 +75,33 @@ namespace Variables
 		ImColor PlayersBoxColor = ImColor(255.0f / 255, 255.0f / 255, 255.0f / 255);
 		bool PlayersBoxFilled = false;
 
+		bool BotChecker = false;
+		bool RainbowBotChecker = false;
+		ImColor BotCheckerColor = ImColor(0, 0, 255);
+		bool BotCheckerText = true;
+
 		bool PlayersHealth = false;
 
-		// Variables pattern
-		bool EnableSomething = false;
-		bool RainbowSomething = false;
-		ImColor SomethingColor = ImColor(255.0f / 255, 255.0f / 255, 255.0f / 255);
+		bool GodMode = false;
 
-		// Examples
-		/*
-		bool EnableAimbot = false;
-		bool RainbowTarget = false;
-		ImColor TargetColor = ImColor(255.0f / 255, 255.0f / 255, 255.0f / 255);
-		
-		bool EnableESP = false;
-		bool RainbowESP = false;
-		ImColor ESPColor = ImColor(255.0f / 255, 255.0f / 255, 255.0f / 255);
+		bool NoRecoil = false;
 
-		or just
+		bool NoSpread = false;
+
+		bool RapidFire = false;
+
+		bool OneShot = false;
+
+		bool InfiniteAmmo = false;
+
+		bool SpeedHack = false;	
+		float SpeedValue = 1.0f;
 
 		bool EnableAimbot = false;
-
-		bool EnableESP = false;
-
-		bool EnableInfinitePoints = false;
-		*/
-
+		bool AimbotFOVCheck = false;
+		float AimbotFOV = 100.0f;
+		float AimbotSmoothness = 1.0f;
+		float AimbotHeight = 20.0f;
 	}
 
 	namespace KEYS

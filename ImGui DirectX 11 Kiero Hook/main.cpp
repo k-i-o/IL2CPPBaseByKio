@@ -14,34 +14,31 @@
 #include <Libraries/PaternScan.hpp>
 #include <Core/HooksFunctions.h>
 #include <Core/Cheats.h>
-#include <Core/InternalGameFunctions.h>
 
 using namespace Variables;
 
 #pragma region ImGui
-extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+	extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-Present oPresent;
-HWND window = NULL;
-WNDPROC oWndProc;
-ID3D11Device* pDevice = NULL;
-ID3D11DeviceContext* pContext = NULL;
-ID3D11RenderTargetView* mainRenderTargetView;
+	Present oPresent;
+	HWND window = NULL;
+	WNDPROC oWndProc;
+	ID3D11Device* pDevice = NULL;
+	ID3D11DeviceContext* pContext = NULL;
+	ID3D11RenderTargetView* mainRenderTargetView;
 #pragma endregion
 
 static bool FindSigs() {
 
 	Unity::il2cppClass* UnityEngineShaderClass = IL2CPP::Class::Find("UnityEngine.Shader");
-	const char* OriginalMethodName = "MethodName";
+	//Unity::il2cppClass* HealthClass = IL2CPP::Class::Find("Health");
 
 	Offsets::UnityEngineShader__FindShader_Offset = (uintptr_t)IL2CPP::Class::Utils::GetMethodPointer(UnityEngineShaderClass, "Find");
-	Unity::il2cppClass* YouOriginalClass = IL2CPP::Class::Find("YouOriginalClass");
-
-	Offsets::YouOriginalClass__MethodName_Offset = (uintptr_t)IL2CPP::Class::Utils::GetMethodPointer(YouOriginalClass, OriginalMethodName);
+	//Offsets::Health__TakeDamage_Offset = (uintptr_t)IL2CPP::Class::Utils::GetMethodPointer(HealthClass, "TakeDamage");
 
 	if (DEBUG) {
 		Utils::Log(Offsets::UnityEngineShader__FindShader_Offset - SDK::GameAssembly, "Find");
-		Utils::Log(Offsets::YouOriginalClass__MethodName_Offset - SDK::GameAssembly, OriginalMethodName);
+		//Utils::Log(Offsets::Health__TakeDamage_Offset - SDK::GameAssembly, "TakeDamage");
 	}
 
 	return true;
@@ -49,14 +46,15 @@ static bool FindSigs() {
 
 static void EnableHooks() {
 
-	// YouOriginalClass__MethodName
-	if (MH_CreateHook(reinterpret_cast<LPVOID*>(
-		Offsets::YouOriginalClass__MethodName_Offset),
-		&HooksFunctions::YouOriginalClass__MethodName_hook,
-		(LPVOID*)&HooksFunctions::YouOriginalClass__MethodName) == MH_OK)
-	{
-		MH_EnableHook(reinterpret_cast<LPVOID*>(Offsets::YouOriginalClass__MethodName_Offset));
-	}
+	// EXAMPLE
+	//// Health__TakeDamage
+	//if (MH_CreateHook(reinterpret_cast<LPVOID*>(
+	//	Offsets::Health__TakeDamage_Offset),
+	//	&HooksFunctions::Health__TakeDamage_hook,
+	//	(LPVOID*)&HooksFunctions::Health__TakeDamage) == MH_OK)
+	//{
+	//	MH_EnableHook(reinterpret_cast<LPVOID*>(Offsets::Health__TakeDamage_Offset));
+	//}
 
 }
 
@@ -79,12 +77,12 @@ static void InitVars() {
 		exit(0);
 	}
 	SDK::Base = (uintptr_t)GetModuleHandleA(NULL);
-	printf("[ %s ] Base Address: 0x%llX\n", Prefix, SDK::Base);
+	printf("[ %s ] Base Address ==> 0x%llX\n", Prefix, SDK::Base);
 	SDK::GameAssembly = (uintptr_t)GetModuleHandleA("GameAssembly.dll");
-	printf("[ %s ] GameAssembly Base Address: 0x%llX\n", Prefix, SDK::GameAssembly);
+	printf("[ %s ] GameAssembly Base Address ==> 0x%llX\n", Prefix, SDK::GameAssembly);
 	SDK::UnityPlayer = (uintptr_t)GetModuleHandleA("UnityPlayer.dll");
-	printf("[ %s ] UnityPlayer Base Address: 0x%llX\n", Prefix, SDK::UnityPlayer);
-	printf("----------------------------------------------------------\n");
+	printf("[ %s ] UnityPlayer Base Address ==> 0x%llX\n", Prefix, SDK::UnityPlayer);
+	printf("**************************************************************\n");
 	printf("\n");
 }
 
@@ -101,105 +99,106 @@ static LRESULT __stdcall WndProc(const HWND hWnd, UINT uMsg, WPARAM wParam, LPAR
 
 static HRESULT __stdcall hkPresent(IDXGISwapChain* pSwapChain, UINT SyncInterval, UINT Flags)
 {
-#pragma region Attach+Init
-	void* m_pThisThread = IL2CPP::Thread::Attach(IL2CPP::Domain::Get());
+	#pragma region Attach+Init
+		void* m_pThisThread = IL2CPP::Thread::Attach(IL2CPP::Domain::Get());
 
-	if (!System::init)
-	{
-		if (SUCCEEDED(pSwapChain->GetDevice(__uuidof(ID3D11Device), (void**)&pDevice)))
+		if (!System::Init)
 		{
-			pDevice->GetImmediateContext(&pContext);
-			DXGI_SWAP_CHAIN_DESC sd;
-			pSwapChain->GetDesc(&sd);
-			window = sd.OutputWindow;
-			ID3D11Texture2D* pBackBuffer = nullptr;
-			pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
-			pDevice->CreateRenderTargetView(pBackBuffer, NULL, &mainRenderTargetView);
-			pBackBuffer->Release();
-			oWndProc = (WNDPROC)SetWindowLongPtr(window, GWLP_WNDPROC, (LONG_PTR)WndProc);
-			InitImGui();
-			ImGui::GetIO().Fonts->AddFontDefault();
-			ImFontConfig font_cfg;
-			font_cfg.GlyphExtraSpacing.x = 1.2;
-			gameFont = ImGui::GetIO().Fonts->AddFontFromMemoryTTF(TTSquaresCondensedBold, 14, 14, &font_cfg);
-			ImGui::GetIO().Fonts->AddFontDefault();
+			if (SUCCEEDED(pSwapChain->GetDevice(__uuidof(ID3D11Device), (void**)&pDevice)))
+			{
+				pDevice->GetImmediateContext(&pContext);
+				DXGI_SWAP_CHAIN_DESC sd;
+				pSwapChain->GetDesc(&sd);
+				window = sd.OutputWindow;
+				ID3D11Texture2D* pBackBuffer = nullptr;
+				pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
+				pDevice->CreateRenderTargetView(pBackBuffer, NULL, &mainRenderTargetView);
+				pBackBuffer->Release();
+				oWndProc = (WNDPROC)SetWindowLongPtr(window, GWLP_WNDPROC, (LONG_PTR)WndProc);
+				InitImGui();
+				ImGui::GetIO().Fonts->AddFontDefault();
+				ImFontConfig font_cfg;
+				font_cfg.GlyphExtraSpacing.x = 1.2;
+				gameFont = ImGui::GetIO().Fonts->AddFontFromMemoryTTF(TTSquaresCondensedBold, 14, 14, &font_cfg);
+				ImGui::GetIO().Fonts->AddFontDefault();
+				
+				CheatVariables::ChamsShader = GameFunctions::UnityEngine_Shader__Find(IL2CPP::String::New("Hidden/Internal-Colored"));
 
-			// try to get a default shader
-			//CheatVariables::ChamsShader = GameFunctions::UnityEngine_Shader__Find(IL2CPP::String::New("Hidden/Internal-Colored"));
-
-			System::init = true;
+				System::Init = true;
+			}
+			else {
+				return oPresent(pSwapChain, SyncInterval, Flags);
+			}
 		}
-		else {
-			return oPresent(pSwapChain, SyncInterval, Flags);
+
+		pContext->RSGetViewports(&System::vps, &System::Viewport);
+		System::ScreenSize = { System::Viewport.Width, System::Viewport.Height };
+		System::ScreenCenter = { System::Viewport.Width / 2.0f, System::Viewport.Height / 2.0f };
+	#pragma endregion
+
+	#pragma region BeginScene
+
+		ImGui_ImplDX11_NewFrame();
+		ImGui_ImplWin32_NewFrame();
+		ImGui::NewFrame();
+
+	#pragma endregion
+
+	#pragma region Watermark
+		if (CheatMenuVariables::Watermark)
+		{
+			Utils::DrawOutlinedText(gameFont, ImVec2(System::ScreenCenter.x, System::ScreenSize.y - 20), 13.0f, CheatMenuVariables::RainbowColor, true, Prefix.c_str());
+			Utils::DrawOutlinedText(gameFont, ImVec2(System::ScreenCenter.x, 5), 13.0f, CheatMenuVariables::RainbowColor, true, "[ %.1f FPS ]", ImGui::GetIO().Framerate);
 		}
-	}
+	#pragma endregion
 
-	pContext->RSGetViewports(&System::vps, &System::viewport);
-	System::ScreenSize = { System::viewport.Width, System::viewport.Height };
-	System::ScreenCenter = { System::viewport.Width / 2.0f, System::viewport.Height / 2.0f };
-#pragma endregion
+	#pragma region CHEATS
 
-#pragma region BeginScene
+		GetCursorPos(&System::MousePos);
+		ScreenToClient(window, &System::MousePos);
 
-	ImGui_ImplDX11_NewFrame();
-	ImGui_ImplWin32_NewFrame();
-	ImGui::NewFrame();
+		if (CheatMenuVariables::ShowMenu)
+		{
+			DrawMouse();
 
-#pragma endregion
+			DrawMenu();
+		}
 
-#pragma region Watermark
-	if (CheatMenuVariables::Watermark)
-	{
-		Utils::DrawOutlinedText(gameFont, ImVec2(System::ScreenCenter.x, System::ScreenSize.y - 20), 13.0f, CheatMenuVariables::RainbowColor, true, Prefix.c_str());
-		Utils::DrawOutlinedText(gameFont, ImVec2(System::ScreenCenter.x, 5), 13.0f, CheatMenuVariables::RainbowColor, true, "[ %.1f FPS ]", ImGui::GetIO().Framerate);
-	}
-#pragma endregion
+		DrawCrosshair();
 
-#pragma region CHEATS
+		if (CheatMenuVariables::AimbotFOVCheck) {
+			ImGui::GetForegroundDrawList()->AddCircle(ImVec2(System::ScreenCenter.x, System::ScreenCenter.y), CheatMenuVariables::AimbotFOV, ImColor(255, 255, 255), 360);
+		}
 
-	if (CheatMenuVariables::ShowMenu)
-	{
-		DrawMouse();
+		// Main cheats loop
+		try { CheatsLoop(); } catch (...) { }
 
-		DrawMenu();
-	}
+	#pragma endregion
 
-	DrawCrosshair();
+	#pragma region EndScene
+		ImGui::Render();
+	#pragma endregion
 
-	if (CheatMenuVariables::AimbotFOVCheck) {
-		ImGui::GetForegroundDrawList()->AddCircle(ImVec2(System::ScreenCenter.x, System::ScreenCenter.y), CheatMenuVariables::AimbotFOV, ImColor(255, 255, 255), 360);
-	}
+	#pragma region Inputs+Deattach
+		if (GetAsyncKeyState(KEYS::SHOWMENU_KEY) & 1)
+		{
+			CheatMenuVariables::ShowMenu = !CheatMenuVariables::ShowMenu;
+		}
 
-	// Main cheats loop
-	try { CheatsLoop(); }
-	catch (...) {}
+		if (GetKeyState(KEYS::DEATTACH_KEY) & 1)
+		{
+			MH_DisableHook(MH_ALL_HOOKS);
+			MH_Uninitialize();
+			CheatMenuVariables::ShowMenu = false;
+		}
 
-#pragma endregion
+		pContext->OMSetRenderTargets(1, &mainRenderTargetView, NULL);
+		ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 
-#pragma region EndScene
-	ImGui::Render();
-#pragma endregion
+		IL2CPP::Thread::Detach(m_pThisThread);
 
-#pragma region Inputs+Deattach
-	if (GetAsyncKeyState(KEYS::SHOWMENU_KEY) & 1)
-	{
-		CheatMenuVariables::ShowMenu = !CheatMenuVariables::ShowMenu;
-	}
-
-	if (GetKeyState(KEYS::DEATTACH_KEY) & 1)
-	{
-		MH_DisableHook(MH_ALL_HOOKS);
-		MH_Uninitialize();
-		CheatMenuVariables::ShowMenu = false;
-	}
-
-	pContext->OMSetRenderTargets(1, &mainRenderTargetView, NULL);
-	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
-
-	IL2CPP::Thread::Detach(m_pThisThread);
-
-#pragma endregion	
-
+	#pragma endregion	
+	 
 	return oPresent(pSwapChain, SyncInterval, Flags);
 }
 
@@ -208,85 +207,82 @@ static void Rainbow() {
 	while (true)
 	{
 
-#pragma region Side Things
-		auto isFrames = ImGui::GetFrameCount();
-		static float isRed = 0.0f, isGreen = 0.01f, isBlue = 0.0f;
-		if (isFrames % 1 == 0)
-		{
-			if (isGreen == 0.01f && isBlue == 0.0f)
-			{
-				isRed += 0.01f;
+		#pragma region Side Things
+				auto isFrames = ImGui::GetFrameCount();
+				static float isRed = 0.0f, isGreen = 0.01f, isBlue = 0.0f;
+				if (isFrames % 1 == 0)
+				{
+					if (isGreen == 0.01f && isBlue == 0.0f)
+					{
+						isRed += 0.01f;
 
-			}
-			if (isRed > 0.99f && isBlue == 0.0f)
-			{
-				isRed = 1.0f;
+					}
+					if (isRed > 0.99f && isBlue == 0.0f)
+					{
+						isRed = 1.0f;
 
-				isGreen += 0.01f;
+						isGreen += 0.01f;
 
-			}
-			if (isGreen > 0.99f && isBlue == 0.0f)
-			{
-				isGreen = 1.0f;
+					}
+					if (isGreen > 0.99f && isBlue == 0.0f)
+					{
+						isGreen = 1.0f;
 
-				isRed -= 0.01f;
+						isRed -= 0.01f;
 
-			}
-			if (isRed < 0.01f && isGreen == 1.0f)
-			{
-				isRed = 0.0f;
+					}
+					if (isRed < 0.01f && isGreen == 1.0f)
+					{
+						isRed = 0.0f;
 
-				isBlue += 0.01f;
+						isBlue += 0.01f;
 
-			}
-			if (isBlue > 0.99f && isRed == 0.0f)
-			{
-				isBlue = 1.0f;
+					}
+					if (isBlue > 0.99f && isRed == 0.0f)
+					{
+						isBlue = 1.0f;
 
-				isGreen -= 0.01f;
+						isGreen -= 0.01f;
 
-			}
-			if (isGreen < 0.01f && isBlue == 1.0f)
-			{
-				isGreen = 0.0f;
+					}
+					if (isGreen < 0.01f && isBlue == 1.0f)
+					{
+						isGreen = 0.0f;
 
-				isRed += 0.01f;
+						isRed += 0.01f;
 
-			}
-			if (isRed > 0.99f && isGreen == 0.0f)
-			{
-				isRed = 1.0f;
+					}
+					if (isRed > 0.99f && isGreen == 0.0f)
+					{
+						isRed = 1.0f;
 
-				isBlue -= 0.01f;
+						isBlue -= 0.01f;
 
-			}
-			if (isBlue < 0.01f && isGreen == 0.0f)
-			{
-				isBlue = 0.0f;
+					}
+					if (isBlue < 0.01f && isGreen == 0.0f)
+					{
+						isBlue = 0.0f;
 
-				isRed -= 0.01f;
+						isRed -= 0.01f;
 
-				if (isRed < 0.01f)
-					isGreen = 0.01f;
+						if (isRed < 0.01f)
+							isGreen = 0.01f;
 
-			}
-		}
+					}
+				}
 
-		GetCursorPos(&System::MousePos);
-		ScreenToClient(window, &System::MousePos);
+		#pragma endregion
 
-#pragma endregion
+		#pragma region Rainbow
+				CheatMenuVariables::Rainbow = ImVec4(isRed, isGreen, isBlue, 1.0f);
+				CheatMenuVariables::RainbowColor = ImColor(CheatMenuVariables::Rainbow.x, CheatMenuVariables::Rainbow.y, CheatMenuVariables::Rainbow.z);
+		#pragma endregion
 
-#pragma region Rainbow
-		CheatMenuVariables::Rainbow = ImVec4(isRed, isGreen, isBlue, 1.0f);
-		CheatMenuVariables::RainbowColor = ImColor(CheatMenuVariables::Rainbow.x, CheatMenuVariables::Rainbow.y, CheatMenuVariables::Rainbow.z);
-#pragma endregion
-
-		Sleep(50);
+		Sleep(30);
 	}
 }
 
-static void InitChair()
+static void Setup()
 {
 	if (DEBUG) {
 		Utils::CreateConsole();
@@ -307,16 +303,16 @@ static void InitChair()
 
 static DWORD WINAPI MainThread(LPVOID lpReserved)
 {
-	bool init_hook = false;
+	bool initHook = false;
 	do
 	{
 		if (kiero::init(kiero::RenderType::D3D11) == kiero::Status::Success)
 		{
-			InitChair();
-			init_hook = true;
-			System::initil2cpp = true;
+			Setup();
+			initHook = true;
+			System::InitIL2Cpp = true;
 		}
-	} while (!init_hook);
+	} while (!initHook);
 	return TRUE;
 }
 
