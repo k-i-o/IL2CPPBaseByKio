@@ -6,10 +6,11 @@ Youtube Channel: https://www.youtube.com/@kiocode
 
 ### Feature already implemented:
 - ImGui
+- UNIVERSAL ESP
+- UNIVERSAL ESP CHARM
+- UNIVERSAL Box ESP
+- Basic UNIVERSAL Aimbot (also with FOV)
 - Hooking
-- Basic Aimbot (also with FOV)
-- ESP
-- Box ESP
 - Basic Inspector Components
 - Mouse Force Drawer
 - Camera FOV Editor
