@@ -68,6 +68,20 @@ static void InitImGui()
 }
 
 static void InitVars() {
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x03);
+	printf("\n****************************************************************************");
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_GREEN);
+	printf(R"(  
+     __  __     __     ______     ______     ______     _____     ______	
+    /\ \/ /    /\ \   /\  __ \   /\  ___\   /\  __ \   /\  __-.  /\  ___\	
+    \ \  _'-.  \ \ \  \ \ \/\ \  \ \ \____  \ \ \/\ \  \ \ \/\ \ \ \  __\   
+     \ \_\ \_\  \ \_\  \ \_____\  \ \_____\  \ \_____\  \ \____-  \ \_____\	
+      \/_/\/_/   \/_/   \/_____/   \/_____/   \/_____/   \/____/   \/_____/
+	)");
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x03);
+	printf("\n****************************************************************************\n");
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0F);
+
 	if (IL2CPP::Initialize(true)) {
 		printf("[ %s ] Il2Cpp initialized\n", Prefix);
 	}
@@ -77,12 +91,12 @@ static void InitVars() {
 		exit(0);
 	}
 	SDK::Base = (uintptr_t)GetModuleHandleA(NULL);
-	printf("[ %s ] Base Address ==> 0x%llX\n", Prefix, SDK::Base);
+	printf("[ %s ] Base Address --> 0x%llX\n", Prefix, SDK::Base);
 	SDK::GameAssembly = (uintptr_t)GetModuleHandleA("GameAssembly.dll");
-	printf("[ %s ] GameAssembly Base Address ==> 0x%llX\n", Prefix, SDK::GameAssembly);
+	printf("[ %s ] GameAssembly Base Address --> 0x%llX\n", Prefix, SDK::GameAssembly);
 	SDK::UnityPlayer = (uintptr_t)GetModuleHandleA("UnityPlayer.dll");
-	printf("[ %s ] UnityPlayer Base Address ==> 0x%llX\n", Prefix, SDK::UnityPlayer);
-	printf("**************************************************************\n");
+	printf("[ %s ] UnityPlayer Base Address --> 0x%llX\n", Prefix, SDK::UnityPlayer);
+	printf("=============================================================================\n");
 	printf("\n");
 }
 
