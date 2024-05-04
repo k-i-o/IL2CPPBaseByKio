@@ -13,7 +13,6 @@
 #include <Utils/SDK.h>
 
 
-
 namespace Utils
 {
 	void CreateConsole() {
@@ -24,8 +23,7 @@ namespace Utils
 		freopen_s(&f, "CONOUT$", "w", stdout);
 	}
 
-
-	bool worldtoscreen(Unity::Vector3 world, Vector2& screen)
+	bool WorldToScreen(Unity::Vector3 world, Vector2& screen)
 	{
 		Unity::CCamera* CameraMain = Unity::Camera::GetMain();
 		if (!CameraMain) {
@@ -50,8 +48,7 @@ namespace Utils
 		}
 	}
 
-
-	void mousemove(float tarx, float tary, float X, float Y, int smooth)
+	void MouseMove(float tarx, float tary, float X, float Y, int smooth)
 	{
 		float ScreenCenterX = (X / 2);
 		float ScreenCenterY = (Y / 2);
@@ -96,17 +93,14 @@ namespace Utils
 		mouse_event(MOUSEEVENTF_MOVE, static_cast<DWORD>(TargetX), static_cast<DWORD>(TargetY), NULL, NULL);
 	}
 
-
-	void Log(uintptr_t address, const char* name) {
-		printf("[ LOG ] %s: 0x%llX\n", name, address);
+	void Log(uintptr_t address, const char* className, const char* methodName) {
+		printf("[ LOG ] %s$$%s: 0x%llX\n", className, methodName, address);
 	}
-
 
 	float GetDistance(Unity::Vector3 a, Unity::Vector3 b)
 	{
 		return sqrt(pow(a.x - b.x, 2) + pow(a.y - b.y, 2) + pow(a.z - b.z, 2));
 	}
-
 
 	Unity::CGameObject* GetNearestPlayer(std::vector<Unity::CGameObject*> list, Unity::CGameObject* localplayer)
 	{
@@ -256,13 +250,11 @@ namespace Utils
 		return y;
 	}
 
-
 	void RectFilled(float x0, float y0, float x1, float y1, ImColor color, float rounding, int rounding_corners_flags)
 	{
 		auto vList = ImGui::GetBackgroundDrawList();
 		vList->AddRectFilled(ImVec2(x0, y0), ImVec2(x1, y1), color, rounding, rounding_corners_flags);
 	}
-
 
 	void HealthBar(float x, float y, float w, float h, int phealth, ImColor col)
 	{
@@ -373,17 +365,33 @@ namespace Utils
 		ImGui::End();
 	}
 
-	void ObjectsCache(std::vector<Unity::CGameObject*>* originalList, const char* CName)
+	bool Contains(Unity::il2cppArray<Unity::CComponent*>* list, Unity::CComponent* c) {
+		for (int i = 0; i < list->m_uMaxLength; i++) {
+			if (list->operator[](i) == c) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	void ObjectsCache(std::vector<Unity::CGameObject*>* originalList, const char* CName, const char* CNameLocalPlayerUniqueComponent = nullptr)
 	{
 		originalList->clear();
 
 		auto list = Unity::Object::FindObjectsOfType<Unity::CComponent>(CName);
 		if (!list) return;
+
+		Unity::il2cppArray<Unity::CComponent*>* possibleLocalPlayer = nullptr;
+		if(CNameLocalPlayerUniqueComponent)
+			possibleLocalPlayer = Unity::Object::FindObjectsOfType<Unity::CComponent>(CNameLocalPlayerUniqueComponent);
+
 		for (int i = 0; i < list->m_uMaxLength; i++)
 		{
-			if (!list->operator[](i)) {
+			auto current = list->operator[](i);
+			if (!current) continue;
+
+			if (possibleLocalPlayer && Contains(possibleLocalPlayer, current))
 				continue;
-			}
 
 			originalList->push_back(list->operator[](i)->GetGameObject());
 		}

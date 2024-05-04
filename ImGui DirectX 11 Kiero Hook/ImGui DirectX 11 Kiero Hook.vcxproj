@@ -117,7 +117,7 @@
     <ClInclude Include="Libraries\PaternScan.hpp" />
     <ClInclude Include="Libraries\Vectors\vec.h" />
     <ClInclude Include="Libraries\Vectors\vec2.h" />
-    <ClInclude Include="Utils\includes.h" />
+    <ClInclude Include="Utils\Includes.h" />
     <ClInclude Include="Utils\SDK.h" />
     <ClInclude Include="Utils\Themes.h" />
     <ClInclude Include="Utils\Utils.h" />

@@ -1,6 +1,6 @@
 #pragma once
 #include <cstdint>
-#include <Utils/includes.h>
+#include <Utils/Includes.h>
 #include <string>
 
 namespace Variables
@@ -37,6 +37,23 @@ namespace Variables
 
 		UnityEngine_Shader_o* ChamsShader;
 
+		ImVec4 Rainbow = ImVec4(0.0f, 0.0f, 0.0f, 0.0f); // Global rainbow color
+		ImColor RainbowColor = ImColor(255.0f / 255, 255.0f / 255, 255.0f / 255); // Global rainbow color
+
+		namespace TestObjects {// developers test scope
+			std::vector<Unity::CGameObject*> List(NULL);
+			char placeholder[] = "UnityEngine.CapsuleCollider";
+			char* Name = placeholder;
+			bool Chams = false;
+			bool Snapline = false;
+			bool RainbowSnapline = false;
+			ImColor SnaplineColor = ImColor(255.0f / 255, 255.0f / 255, 255.0f / 255);
+			bool Box = false;
+			bool RainbowBox = false;
+			ImColor BoxColor = ImColor(255.0f / 255, 255.0f / 255, 255.0f / 255);
+			bool Aimbot = false;
+		}
+
 		static DWORD LastShotTime = 0;
 		static DWORD LastTick = 0;
 	}
@@ -46,8 +63,7 @@ namespace Variables
 		bool ShowMenu = false;
 		bool Watermark = false;
 
-		ImVec4 Rainbow = ImVec4(0.0f, 0.0f, 0.0f, 0.0f); // Global rainbow color
-		ImColor RainbowColor = ImColor(255.0f / 255, 255.0f / 255, 255.0f / 255); // Global rainbow color
+		bool EnableDeveloperOptions = false;
 
 		bool ShowInspector = false;
 		
@@ -65,7 +81,7 @@ namespace Variables
 		bool PlayersSnapline = false;
 		bool RainbowPlayersSnapline = false;
 		ImColor PlayersSnaplineColor = ImColor(255.0f / 255, 255.0f / 255, 255.0f / 255);
-		int PlayersSnaplineType = 0;
+		int PlayersSnaplineType = 2;
 
 		bool PlayerChams = false;
 		bool RainbowPlayerChams = false;
@@ -101,7 +117,7 @@ namespace Variables
 		bool AimbotFOVCheck = false;
 		float AimbotFOV = 100.0f;
 		float AimbotSmoothness = 1.0f;
-		float AimbotHeight = 20.0f;
+		float AimbotHeight = 5.0f;
 	}
 
 	namespace KEYS

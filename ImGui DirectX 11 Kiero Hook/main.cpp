@@ -3,7 +3,7 @@
 #include <intrin.h>
 
 // my includes
-#include <Utils/includes.h>
+#include <Utils/Includes.h>
 #include <Utils/SDK.h>
 #include <Utils/Utils.h>
 #include <Libraries/Fonts/Font.h>
@@ -30,15 +30,25 @@ using namespace Variables;
 
 static bool FindSigs() {
 
-	Unity::il2cppClass* UnityEngineShaderClass = IL2CPP::Class::Find("UnityEngine.Shader");
-	//Unity::il2cppClass* HealthClass = IL2CPP::Class::Find("Health");
-
-	Offsets::UnityEngineShader__FindShader_Offset = (uintptr_t)IL2CPP::Class::Utils::GetMethodPointer(UnityEngineShaderClass, "Find");
-	//Offsets::Health__TakeDamage_Offset = (uintptr_t)IL2CPP::Class::Utils::GetMethodPointer(HealthClass, "TakeDamage");
+	// UnityEngine.Shader::Find, ... etc
+	const char* UnityEngineShaderClassName = "UnityEngine.Shader";
+	const char* UnityEngineShaderClassMethod1 = "Find";
+	Unity::il2cppClass* UnityEngineShaderClass = IL2CPP::Class::Find(UnityEngineShaderClassName);
+	Offsets::UnityEngineShader__FindShader_Offset = (uintptr_t)IL2CPP::Class::Utils::GetMethodPointer(UnityEngineShaderClass, UnityEngineShaderClassMethod1);
+	
+	
+	// Example: Health::TakeDamage, Health::Heal
+	//const char* HealthClassName = "Health";
+	//const char* HealthClassMethod1 = "TakeDamage";
+	//const char* HealthClassMethod2 = "Heal";
+	//Unity::il2cppClass* HealthClass = IL2CPP::Class::Find(HealthClassName);
+	//Offsets::Health__TakeDamage_Offset = (uintptr_t)IL2CPP::Class::Utils::GetMethodPointer(HealthClass, HealthClassMethod1);
+	//Offsets::Health__Heal_Offset = (uintptr_t)IL2CPP::Class::Utils::GetMethodPointer(HealthClass, HealthClassMethod2);
 
 	if (DEBUG) {
-		Utils::Log(Offsets::UnityEngineShader__FindShader_Offset - SDK::GameAssembly, "Find");
-		//Utils::Log(Offsets::Health__TakeDamage_Offset - SDK::GameAssembly, "TakeDamage");
+		Utils::Log(Offsets::UnityEngineShader__FindShader_Offset - SDK::GameAssembly, UnityEngineShaderClassName, UnityEngineShaderClassMethod1);
+		//Utils::Log(Offsets::Health__TakeDamage_Offset - SDK::GameAssembly, HealthClassName, HealthClassMethod1);
+		//Utils::Log(Offsets::Health__TakeDamage_Offset - SDK::GameAssembly, HealthClass, HealthClassMethod2);
 	}
 
 	return true;
@@ -69,7 +79,7 @@ static void InitImGui()
 
 static void InitVars() {
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x03);
-	printf("\n****************************************************************************");
+	printf("\n*******************************************************************************");
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_GREEN);
 	printf(R"(  
      __  __     __     ______     ______     ______     _____     ______	
@@ -79,7 +89,7 @@ static void InitVars() {
       \/_/\/_/   \/_/   \/_____/   \/_____/   \/_____/   \/____/   \/_____/
 	)");
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x03);
-	printf("\n****************************************************************************\n");
+	printf("\n*******************************************************************************\n");
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0F);
 
 	if (IL2CPP::Initialize(true)) {
@@ -98,6 +108,20 @@ static void InitVars() {
 	printf("[ %s ] UnityPlayer Base Address --> 0x%llX\n", Prefix, SDK::UnityPlayer);
 	printf("=============================================================================\n");
 	printf("\n");
+}
+
+static void HandleInputs() {
+	if (GetAsyncKeyState(KEYS::SHOWMENU_KEY) & 1)
+	{
+		CheatMenuVariables::ShowMenu = !CheatMenuVariables::ShowMenu;
+	}
+
+	if (GetKeyState(KEYS::DEATTACH_KEY) & 1)
+	{
+		MH_DisableHook(MH_ALL_HOOKS);
+		MH_Uninitialize();
+		CheatMenuVariables::ShowMenu = false;
+	}
 }
 
 static LRESULT __stdcall WndProc(const HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
@@ -161,8 +185,8 @@ static HRESULT __stdcall hkPresent(IDXGISwapChain* pSwapChain, UINT SyncInterval
 	#pragma region Watermark
 		if (CheatMenuVariables::Watermark)
 		{
-			Utils::DrawOutlinedText(gameFont, ImVec2(System::ScreenCenter.x, System::ScreenSize.y - 20), 13.0f, CheatMenuVariables::RainbowColor, true, Prefix.c_str());
-			Utils::DrawOutlinedText(gameFont, ImVec2(System::ScreenCenter.x, 5), 13.0f, CheatMenuVariables::RainbowColor, true, "[ %.1f FPS ]", ImGui::GetIO().Framerate);
+			Utils::DrawOutlinedText(gameFont, ImVec2(System::ScreenCenter.x, System::ScreenSize.y - 20), 13.0f, CheatVariables::RainbowColor, true, Prefix.c_str());
+			Utils::DrawOutlinedText(gameFont, ImVec2(System::ScreenCenter.x, 5), 13.0f, CheatVariables::RainbowColor, true, "[ %.1f FPS ]", ImGui::GetIO().Framerate);
 		}
 	#pragma endregion
 
@@ -170,6 +194,12 @@ static HRESULT __stdcall hkPresent(IDXGISwapChain* pSwapChain, UINT SyncInterval
 
 		GetCursorPos(&System::MousePos);
 		ScreenToClient(window, &System::MousePos);
+
+		HandleInputs();
+
+		// Main cheats loop
+		try { CheatsLoop(); }
+		catch (...) {}
 
 		if (CheatMenuVariables::ShowMenu)
 		{
@@ -184,27 +214,13 @@ static HRESULT __stdcall hkPresent(IDXGISwapChain* pSwapChain, UINT SyncInterval
 			ImGui::GetForegroundDrawList()->AddCircle(ImVec2(System::ScreenCenter.x, System::ScreenCenter.y), CheatMenuVariables::AimbotFOV, ImColor(255, 255, 255), 360);
 		}
 
-		// Main cheats loop
-		try { CheatsLoop(); } catch (...) { }
-
 	#pragma endregion
 
 	#pragma region EndScene
 		ImGui::Render();
 	#pragma endregion
 
-	#pragma region Inputs+Deattach
-		if (GetAsyncKeyState(KEYS::SHOWMENU_KEY) & 1)
-		{
-			CheatMenuVariables::ShowMenu = !CheatMenuVariables::ShowMenu;
-		}
-
-		if (GetKeyState(KEYS::DEATTACH_KEY) & 1)
-		{
-			MH_DisableHook(MH_ALL_HOOKS);
-			MH_Uninitialize();
-			CheatMenuVariables::ShowMenu = false;
-		}
+	#pragma region Deattach
 
 		pContext->OMSetRenderTargets(1, &mainRenderTargetView, NULL);
 		ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
@@ -288,8 +304,8 @@ static void Rainbow() {
 		#pragma endregion
 
 		#pragma region Rainbow
-				CheatMenuVariables::Rainbow = ImVec4(isRed, isGreen, isBlue, 1.0f);
-				CheatMenuVariables::RainbowColor = ImColor(CheatMenuVariables::Rainbow.x, CheatMenuVariables::Rainbow.y, CheatMenuVariables::Rainbow.z);
+				CheatVariables::Rainbow= ImVec4(isRed, isGreen, isBlue, 1.0f);
+				CheatVariables::RainbowColor = ImColor(CheatVariables::Rainbow.x, CheatVariables::Rainbow.y, CheatVariables::Rainbow.z);
 		#pragma endregion
 
 		Sleep(30);
@@ -311,6 +327,7 @@ static void Setup()
 
 	kiero::bind(8, (void**)&oPresent, hkPresent);
 
+	// secondary threads
 	CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)CacheManager, NULL, NULL, NULL);
 	CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)Rainbow, NULL, NULL, NULL);
 }
