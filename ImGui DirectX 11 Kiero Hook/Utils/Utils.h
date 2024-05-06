@@ -97,6 +97,10 @@ namespace Utils
 		printf("[ LOG ] %s$$%s: 0x%llX\n", className, methodName, address);
 	}
 
+	void LogError(const char* text, const char* name) {
+		printf("[ LOG ] %s: %s\n", text, name);
+	}
+
 	float GetDistance(Unity::Vector3 a, Unity::Vector3 b)
 	{
 		return sqrt(pow(a.x - b.x, 2) + pow(a.y - b.y, 2) + pow(a.z - b.z, 2));
@@ -365,6 +369,37 @@ namespace Utils
 		ImGui::End();
 	}
 
+	uintptr_t SearchSignatureByClassAndFunctionName(const char* className, const char* functionName) {
+		Unity::il2cppClass* classPtr = IL2CPP::Class::Find(className);
+		if (!classPtr) {
+			Utils::LogError("Class not found", className);
+			return 0;
+		}
+		uintptr_t methodPtr = (uintptr_t)IL2CPP::Class::Utils::GetMethodPointer(classPtr, functionName);
+		if (methodPtr == 0) {
+			Utils::LogError("Method not found", functionName);
+			return 0;
+		}
+		Utils::Log(methodPtr - SDK::GameAssembly, className, functionName);
+
+		return methodPtr;
+	}
+
+	bool GetHead(Unity::CGameObject* obj) { // thats a test
+		auto Animators = obj->CallMethodSafe<Unity::il2cppArray<Unity::CComponent*>*>("GetComponentsInChildren", IL2CPP::Class::GetSystemType(IL2CPP::Class::Find("UnityEngine.Animator")));
+
+		if (!Animators)
+			return false;
+
+		auto Animator = Animators->operator[](0);
+
+		Unity::CTransform* headTransform = Animator->CallMethodSafe<Unity::CTransform*>("GetBoneTransform", 10);
+
+		ImGui::GetForegroundDrawList()->AddCircleFilled(ImVec2(headTransform->GetPosition().x, headTransform->GetPosition().y), 4, ImColor(255, 0, 0, 255));
+
+		return true;
+	}
+
 	bool Contains(Unity::il2cppArray<Unity::CComponent*>* list, Unity::CComponent* c) {
 		for (int i = 0; i < list->m_uMaxLength; i++) {
 			if (list->operator[](i) == c) {
@@ -376,6 +411,8 @@ namespace Utils
 
 	void ObjectsCache(std::vector<Unity::CGameObject*>* originalList, const char* CName, const char* CNameLocalPlayerUniqueComponent = nullptr)
 	{
+		if(!originalList || !CName) return;
+
 		originalList->clear();
 
 		auto list = Unity::Object::FindObjectsOfType<Unity::CComponent>(CName);
@@ -393,7 +430,10 @@ namespace Utils
 			if (possibleLocalPlayer && Contains(possibleLocalPlayer, current))
 				continue;
 
-			originalList->push_back(list->operator[](i)->GetGameObject());
+			auto gameObject = current->GetGameObject();
+			if (!gameObject) continue;
+
+			originalList->push_back(gameObject);
 		}
 
 	}

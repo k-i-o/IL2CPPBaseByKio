@@ -30,26 +30,16 @@ using namespace Variables;
 
 static bool FindSigs() {
 
-	// UnityEngine.Shader::Find, ... etc
-	const char* UnityEngineShaderClassName = "UnityEngine.Shader";
-	const char* UnityEngineShaderClassMethod1 = "Find";
-	Unity::il2cppClass* UnityEngineShaderClass = IL2CPP::Class::Find(UnityEngineShaderClassName);
-	Offsets::UnityEngineShader__FindShader_Offset = (uintptr_t)IL2CPP::Class::Utils::GetMethodPointer(UnityEngineShaderClass, UnityEngineShaderClassMethod1);
-	
-	
-	// Example: Health::TakeDamage, Health::Heal
-	//const char* HealthClassName = "Health";
-	//const char* HealthClassMethod1 = "TakeDamage";
-	//const char* HealthClassMethod2 = "Heal";
-	//Unity::il2cppClass* HealthClass = IL2CPP::Class::Find(HealthClassName);
-	//Offsets::Health__TakeDamage_Offset = (uintptr_t)IL2CPP::Class::Utils::GetMethodPointer(HealthClass, HealthClassMethod1);
-	//Offsets::Health__Heal_Offset = (uintptr_t)IL2CPP::Class::Utils::GetMethodPointer(HealthClass, HealthClassMethod2);
+	// UnityEngine.Shader::Find
+	Offsets::UnityEngineShader__FindShader_Offset = Utils::SearchSignatureByClassAndFunctionName("UnityEngine.Shader", "Find");
 
-	if (DEBUG) {
-		Utils::Log(Offsets::UnityEngineShader__FindShader_Offset - SDK::GameAssembly, UnityEngineShaderClassName, UnityEngineShaderClassMethod1);
-		//Utils::Log(Offsets::Health__TakeDamage_Offset - SDK::GameAssembly, HealthClassName, HealthClassMethod1);
-		//Utils::Log(Offsets::Health__TakeDamage_Offset - SDK::GameAssembly, HealthClass, HealthClassMethod2);
-	}
+	// UnityEngine.Time::get_timeScale, UnityEngine.Time::set_timeScale
+	Offsets::UnityEngineTime__GetTimeScale_Offset = Utils::SearchSignatureByClassAndFunctionName("UnityEngine.Time", "get_timeScale");
+	Offsets::UnityEngineTime__SetTimeScale_Offset = Utils::SearchSignatureByClassAndFunctionName("UnityEngine.Time", "set_timeScale");
+
+	// Example: Health::TakeDamage, Health::Heal
+	// Offsets::Health__TakeDamage_Offset = SearchSignatureByClassAndFunctionName("Health", "TakeDamage");
+	// Offsets::Health__Heal_Offset = SearchSignatureByClassAndFunctionName("Health", "Heal");
 
 	return true;
 }
@@ -102,9 +92,9 @@ static void InitVars() {
 	}
 	SDK::Base = (uintptr_t)GetModuleHandleA(NULL);
 	printf("[ %s ] Base Address --> 0x%llX\n", Prefix, SDK::Base);
-	SDK::GameAssembly = (uintptr_t)GetModuleHandleA("GameAssembly.dll");
+	SDK::GameAssembly = (uintptr_t)GetModuleHandleA(GameAssemblyName);
 	printf("[ %s ] GameAssembly Base Address --> 0x%llX\n", Prefix, SDK::GameAssembly);
-	SDK::UnityPlayer = (uintptr_t)GetModuleHandleA("UnityPlayer.dll");
+	SDK::UnityPlayer = (uintptr_t)GetModuleHandleA(UnityPlayerName);
 	printf("[ %s ] UnityPlayer Base Address --> 0x%llX\n", Prefix, SDK::UnityPlayer);
 	printf("=============================================================================\n");
 	printf("\n");
@@ -233,82 +223,26 @@ static HRESULT __stdcall hkPresent(IDXGISwapChain* pSwapChain, UINT SyncInterval
 }
 
 static void Rainbow() {
+	float isRed = 0.0f, isGreen = 0.01f, isBlue = 0.0f;
 
 	while (true)
 	{
+		if (ImGui::GetFrameCount() % 1 == 0)
+		{
+			if (isGreen == 0.01f && isBlue == 0.0f) isRed += 0.01f;
+			if (isRed > 0.99f && isBlue == 0.0f) { isRed = 1.0f; isGreen += 0.01f; }
+			if (isGreen > 0.99f && isBlue == 0.0f) { isGreen = 1.0f; isRed -= 0.01f; }
+			if (isRed < 0.01f && isGreen == 1.0f) { isRed = 0.0f; isBlue += 0.01f; }
+			if (isBlue > 0.99f && isRed == 0.0f) { isBlue = 1.0f; isGreen -= 0.01f; }
+			if (isGreen < 0.01f && isBlue == 1.0f) { isGreen = 0.0f; isRed += 0.01f; }
+			if (isRed > 0.99f && isGreen == 0.0f) { isRed = 1.0f; isBlue -= 0.01f; }
+			if (isBlue < 0.01f && isGreen == 0.0f) { isBlue = 0.0f; isRed += 0.01f; if (isRed < 0.01f) isGreen = 0.01f; }
+		}
 
-		#pragma region Side Things
-				auto isFrames = ImGui::GetFrameCount();
-				static float isRed = 0.0f, isGreen = 0.01f, isBlue = 0.0f;
-				if (isFrames % 1 == 0)
-				{
-					if (isGreen == 0.01f && isBlue == 0.0f)
-					{
-						isRed += 0.01f;
+		CheatVariables::Rainbow= ImVec4(isRed, isGreen, isBlue, 1.0f);
+		CheatVariables::RainbowColor = ImColor(CheatVariables::Rainbow.x, CheatVariables::Rainbow.y, CheatVariables::Rainbow.z);
 
-					}
-					if (isRed > 0.99f && isBlue == 0.0f)
-					{
-						isRed = 1.0f;
-
-						isGreen += 0.01f;
-
-					}
-					if (isGreen > 0.99f && isBlue == 0.0f)
-					{
-						isGreen = 1.0f;
-
-						isRed -= 0.01f;
-
-					}
-					if (isRed < 0.01f && isGreen == 1.0f)
-					{
-						isRed = 0.0f;
-
-						isBlue += 0.01f;
-
-					}
-					if (isBlue > 0.99f && isRed == 0.0f)
-					{
-						isBlue = 1.0f;
-
-						isGreen -= 0.01f;
-
-					}
-					if (isGreen < 0.01f && isBlue == 1.0f)
-					{
-						isGreen = 0.0f;
-
-						isRed += 0.01f;
-
-					}
-					if (isRed > 0.99f && isGreen == 0.0f)
-					{
-						isRed = 1.0f;
-
-						isBlue -= 0.01f;
-
-					}
-					if (isBlue < 0.01f && isGreen == 0.0f)
-					{
-						isBlue = 0.0f;
-
-						isRed -= 0.01f;
-
-						if (isRed < 0.01f)
-							isGreen = 0.01f;
-
-					}
-				}
-
-		#pragma endregion
-
-		#pragma region Rainbow
-				CheatVariables::Rainbow= ImVec4(isRed, isGreen, isBlue, 1.0f);
-				CheatVariables::RainbowColor = ImColor(CheatVariables::Rainbow.x, CheatVariables::Rainbow.y, CheatVariables::Rainbow.z);
-		#pragma endregion
-
-		Sleep(30);
+		Sleep(20);
 	}
 }
 

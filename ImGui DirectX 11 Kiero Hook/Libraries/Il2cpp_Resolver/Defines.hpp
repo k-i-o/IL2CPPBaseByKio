@@ -1,5 +1,6 @@
 #pragma once
 #include <assert.h>
+
 // Disable Asserts
 //#define IL2CPP_ASSERT(x) assert(0)
 #ifndef IL2CPP_ASSERT
@@ -7,7 +8,7 @@
 #endif
 
 #ifndef IL2CPP_MAIN_MODULE
-	#define IL2CPP_MAIN_MODULE "GameAssembly.dll"
+#define IL2CPP_MAIN_MODULE "GameAssembly.dll"
 #endif
 
 #define IL2CPP_INIT_EXPORT								"il2cpp_init"

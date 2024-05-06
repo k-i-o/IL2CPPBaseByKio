@@ -14,11 +14,14 @@ namespace Fns {
 
 	bool RenderChams(Unity::CGameObject* obj) {
 		// MAYBE THERE YOU SHOULD GET ANOTHER COMPONENT INSIDE THE CURRENT PLAYER AND AFTER FOUND THE RENDER LIST FROM THAT SUB GAMEOBJECT
+		Unity::il2cppClass* CRenderer = IL2CPP::Class::Find("UnityEngine.Renderer");
+		if (!CRenderer) return false;
 
-		auto RenderList = obj->CallMethodSafe<Unity::il2cppArray<Unity::CComponent*>*>("GetComponentsInChildren", IL2CPP::Class::GetSystemType(IL2CPP::Class::Find("UnityEngine.Renderer")));
+		Unity::il2cppObject* CRSystemType = IL2CPP::Class::GetSystemType(CRenderer);
+		if (!CRSystemType) return false;
 
-		if (!RenderList)
-			return false;
+		auto RenderList = obj->CallMethodSafe<Unity::il2cppArray<Unity::CComponent*>*>("GetComponentsInChildren", CRSystemType);
+		if (!RenderList) return false;
 
 		// THERE YOU SHOULD SKIP SOME RENDERERS, LIKE WEAPONS, OR OTHER STUFF
 
@@ -101,6 +104,44 @@ namespace Fns {
 		else {
 			ImGui::GetBackgroundDrawList()->AddRect(boxTopLeft, boxBottomRight, color);
 		}*/
+
+		return true;
+	}
+
+	bool RenderESPSkeleton(ImColor color, Unity::CGameObject* entity) { // THE GAME MUST USE ActorJoint COMPONENT
+		
+		Unity::il2cppClass* CActorJoint = IL2CPP::Class::Find("ActorJoint");
+		if(!CActorJoint) return false;
+
+		Unity::il2cppObject* CAJSystemType = IL2CPP::Class::GetSystemType(CActorJoint);
+		if (!CAJSystemType) return false;
+
+		Unity::il2cppArray<Unity::CComponent*>* Joints = entity->CallMethodSafe<Unity::il2cppArray<Unity::CComponent*>*>("GetComponentsInChildren", CAJSystemType);
+		if (!Joints) return	false;
+
+		for (std::pair<int, int> bonePair : CheatVariables::BonePairs)
+		{
+			auto j1 = Joints->operator[](bonePair.first);
+			auto j2 = Joints->operator[](bonePair.second);
+
+			if (!j1 || !j2)
+				continue;
+
+			auto j1T = j1->GetTransform();
+			auto j2T = j2->GetTransform();
+
+			if (!j1T || !j2T)
+				continue;
+
+			auto startpos = j1T->GetPosition();
+			auto endpos = j2T->GetPosition();
+
+			Vector2 start, end;
+			if (Utils::WorldToScreen(startpos, start) && Utils::WorldToScreen(endpos, end))
+			{
+				ImGui::GetBackgroundDrawList()->AddLine(ImVec2(start.x, start.y), ImVec2(end.x, end.y), color, 1.5f);
+			}
+		}
 
 		return true;
 	}
@@ -247,10 +288,10 @@ void DrawMenu()
 					ImGui::Checkbox("Players Snapline", &CheatMenuVariables::PlayersSnapline);
 					ImGui::SameLine();
 					ImGui::ColorEdit3("##PlayersSnaplineColor", (float*)&CheatMenuVariables::PlayersSnaplineColor, ImGuiColorEditFlags_NoDragDrop | ImGuiColorEditFlags_NoInputs);
-					ImGui::SameLine(); Utils::HelpMarker("Color of the players snapline");
+					if(ImGui::IsItemHovered()) ImGui::SetTooltip("Color of the players snapline");
 					ImGui::SameLine();
 					ImGui::Checkbox("##RGB3", &CheatMenuVariables::RainbowPlayersSnapline);
-					ImGui::SameLine(); Utils::HelpMarker("Toggle rainbow color on the players snapline");
+					if (ImGui::IsItemHovered()) ImGui::SetTooltip("Toggle rainbow color on the players snapline");
 					ImGui::Text("Snapline Type");
 					ImGui::SameLine();
 					ImGui::SliderInt("##PlayersSnaplineType", &CheatMenuVariables::PlayersSnaplineType, 0, 2);
@@ -260,26 +301,36 @@ void DrawMenu()
 					ImGui::Checkbox("Bot Checker", &CheatMenuVariables::BotChecker);
 					ImGui::SameLine();
 					ImGui::ColorEdit3("##BotCheckerColor", (float*)&CheatMenuVariables::BotCheckerColor, ImGuiColorEditFlags_NoDragDrop | ImGuiColorEditFlags_NoInputs);
-					ImGui::SameLine(); Utils::HelpMarker("Color of the bot checker");
+					if (ImGui::IsItemHovered()) ImGui::SetTooltip("Color of the bot checker");
 					ImGui::SameLine();
 					ImGui::Checkbox("##RGB4", &CheatMenuVariables::RainbowBotChecker);
-					ImGui::SameLine(); Utils::HelpMarker("Toggle rainbow color on the bot checker");
+					if (ImGui::IsItemHovered()) ImGui::SetTooltip("Toggle rainbow color on the bot checker");
 					ImGui::SameLine();
 					ImGui::Checkbox("Show Bot Text", &CheatMenuVariables::BotCheckerText);
-					ImGui::SameLine(); Utils::HelpMarker("Show a text on the bot if the player is a bot");
+					if(ImGui::IsItemHovered()) ImGui::SetTooltip("Show text 'Bot' on the bot checker");
 				}
 
 				{ // Players Box
 					ImGui::Checkbox("Players Box", &CheatMenuVariables::PlayersBox);
 					ImGui::SameLine();
 					ImGui::ColorEdit3("##PlayersBoxColor", (float*)&CheatMenuVariables::PlayersBoxColor, ImGuiColorEditFlags_NoDragDrop | ImGuiColorEditFlags_NoInputs);
-					ImGui::SameLine(); Utils::HelpMarker("Color of the players box");
+					if (ImGui::IsItemHovered()) ImGui::SetTooltip("Color of the players box");
 					ImGui::SameLine();
 					ImGui::Checkbox("##RGB5", &CheatMenuVariables::RainbowPlayersBox);
-					ImGui::SameLine(); Utils::HelpMarker("Toggle rainbow color on the players box");
+					if (ImGui::IsItemHovered()) ImGui::SetTooltip("Toggle rainbow color on the players box");
 					ImGui::SameLine();
 					ImGui::Checkbox("##Filled", &CheatMenuVariables::PlayersBoxFilled);
-					ImGui::SameLine(); Utils::HelpMarker("Toggle filled box on the players box");
+					if (ImGui::IsItemHovered()) ImGui::SetTooltip("Fill the players box");
+				}
+
+				{ // Player Skeleton
+					ImGui::Checkbox("Players Skeleton", &CheatMenuVariables::PlayerSkeleton);
+					ImGui::SameLine();
+					ImGui::ColorEdit3("##PlayerSkeletonColor", (float*)&CheatMenuVariables::PlayerSkeletonColor, ImGuiColorEditFlags_NoDragDrop | ImGuiColorEditFlags_NoInputs);
+					if (ImGui::IsItemHovered()) ImGui::SetTooltip("Color of the players skeleton");
+					ImGui::SameLine();
+					ImGui::Checkbox("##RGB6", &CheatMenuVariables::RainbowPlayerSkeleton);
+					if (ImGui::IsItemHovered()) ImGui::SetTooltip("Toggle rainbow color on the players skeleton");
 				}
 
 				{ // Charms
@@ -321,6 +372,18 @@ void DrawMenu()
 			}
 			case 2: {
 
+				ImGui::Text("Game timescale");
+				ImGui::SliderFloat("##timescale", &CheatMenuVariables::GameSpeed, 0.0f, 100.0f);
+				ImGui::SameLine(); 
+				if(ImGui::Button("Set Timescale")) {
+					GameFunctions::UnityEngine_Time__set_timeScale(CheatMenuVariables::GameSpeed);
+				}	
+				ImGui::SameLine(); Utils::HelpMarker("Change the game speed");
+				if(ImGui::Button("Reset Timescale")) {
+					CheatMenuVariables::GameSpeed = 1.0f;
+					GameFunctions::UnityEngine_Time__set_timeScale(CheatMenuVariables::GameSpeed);
+				}
+
 				//{ // GodMode
 				//	ImGui::Checkbox("GodMode (for you and bots)", &CheatMenuVariables::GodMode);
 				//}
@@ -361,7 +424,7 @@ void DrawMenu()
 					ImGui::Checkbox("Draw mouse", &CheatMenuVariables::ShowMouse);
 					ImGui::SameLine();
 					ImGui::ColorEdit3("##MouseColor", (float*)&CheatMenuVariables::MouseColor, ImGuiColorEditFlags_NoDragDrop | ImGuiColorEditFlags_NoInputs);
-					ImGui::SameLine(); Utils::HelpMarker("Color of the mouse");
+					if (ImGui::IsItemHovered()) ImGui::SetTooltip("Color of the mouse");
 					ImGui::SameLine();
 					ImGui::Checkbox("##RGB1", &CheatMenuVariables::RainbowMouse);
 					ImGui::SameLine(); Utils::HelpMarker("Toggle rainbow color on the mouse");
@@ -374,10 +437,10 @@ void DrawMenu()
 					ImGui::Checkbox("Crosshair", &CheatMenuVariables::Crosshair);
 					ImGui::SameLine();
 					ImGui::ColorEdit3("##CrosshairColor", (float*)&CheatMenuVariables::CrosshairColor, ImGuiColorEditFlags_NoDragDrop | ImGuiColorEditFlags_NoInputs);
-					ImGui::SameLine(); Utils::HelpMarker("Color of the crosshair");
+					if (ImGui::IsItemHovered()) ImGui::SetTooltip("Color of the crosshair");
 					ImGui::SameLine();
 					ImGui::Checkbox("##RGB2", &CheatMenuVariables::RainbowCrosshair);
-					ImGui::SameLine(); Utils::HelpMarker("Toggle rainbow color on the crosshair");
+					if (ImGui::IsItemHovered()) ImGui::SetTooltip("Toggle rainbow color on the crosshair");
 					ImGui::Text("Crosshair Size");
 					ImGui::SameLine();
 					ImGui::SliderFloat("##Crosshair Size", &CheatMenuVariables::CrosshairSize, 0.1f, 10.0f);
@@ -386,29 +449,45 @@ void DrawMenu()
 					ImGui::SliderInt("##Crosshair type", &CheatMenuVariables::CrosshairType, 0, 1);
 				}
 
+				{ // Camera fov
+					ImGui::Checkbox("Camera Fov Changer", &CheatMenuVariables::CameraFovChanger);
+					ImGui::Text("Camera Custom FOV");
+					ImGui::SameLine();
+					ImGui::SliderFloat("##Camera Custom FOV", &CheatMenuVariables::CameraCustomFOV, 0.1f, 300.0f);
+				}
+
 				ImGui::Separator();
 				ImGui::Spacing();
 
-				ImGui::Text("Developer Options");
+				//if(ImGui::Button("Create capsule")) {
+				//	Unity::CGameObject* capsule = Unity::GameObject::CreatePrimitive(Unity::GameObject::m_ePrimitiveType::Capsule);
+				//	capsule->GetTransform()->SetPosition(Unity::Vector3(0, 0, 0));
+				//}
 
-				ImGui::Checkbox("Enable Developer Options", &CheatMenuVariables::EnableDeveloperOptions);
+				if (DEBUG) {
+					ImGui::Text("Developer Options");
 
-				if(CheatMenuVariables::EnableDeveloperOptions)
-				{ 
-					ImGui::Checkbox("Show Inspector", &CheatMenuVariables::ShowInspector);
+					ImGui::Checkbox("Enable Developer Options", &CheatMenuVariables::EnableDeveloperOptions);
 
-					{ // test things
-						ImGui::Text("Test Objects");
-						ImGui::SameLine();
-						ImGui::InputTextWithHint("##SearchObject", "Name of a component...", CheatVariables::TestObjects::Name, 200);
+					if (CheatMenuVariables::EnableDeveloperOptions)
+					{
+						ImGui::Indent();
+						ImGui::Checkbox("Show Inspector", &CheatMenuVariables::ShowInspector);
+						ImGui::Spacing();
 
-						ImGui::Checkbox("Test Objects Chams", &CheatVariables::TestObjects::Chams);
-						ImGui::Checkbox("Test Objects Snapline", &CheatVariables::TestObjects::Snapline);
-						ImGui::SameLine();
-						ImGui::Checkbox("Test Objects Rainbow Snapline", &CheatVariables::TestObjects::RainbowSnapline);
-						ImGui::Checkbox("Test Objects Box", &CheatVariables::TestObjects::Box);
-						ImGui::Checkbox("Test Objects Rainbow Box", &CheatVariables::TestObjects::RainbowBox);
-						ImGui::Checkbox("Test Objects Aimbot", &CheatVariables::TestObjects::Aimbot);
+						{ // test things
+							ImGui::Text("Test Objects");
+							ImGui::SameLine();
+							ImGui::InputTextWithHint("##SearchObject", "Name of a component...", CheatVariables::TestObjects::Name, 200);
+
+							ImGui::Checkbox("Test Objects Chams", &CheatVariables::TestObjects::Chams);
+							ImGui::SameLine();
+							ImGui::Checkbox("Test Objects Snapline", &CheatVariables::TestObjects::Snapline);
+							ImGui::Checkbox("Test Objects Box", &CheatVariables::TestObjects::Box);
+							ImGui::SameLine();
+							ImGui::Checkbox("Test Objects Aimbot", &CheatVariables::TestObjects::Aimbot);
+						}
+						ImGui::Unindent();
 					}
 				}
 				break;
@@ -425,15 +504,20 @@ void CheatsLoop()
 
 	if (!Variables::System::InitIL2Cpp) return;
 
+
+	if (CheatMenuVariables::CameraFovChanger)
+	{
+		Unity::CCamera* CameraMain = Unity::Camera::GetMain();
+		if (CameraMain != nullptr) {
+			CameraMain->CallMethodSafe<void*>("set_fieldOfView", CheatMenuVariables::CameraCustomFOV);
+		}
+	}
+
 	if (CheatMenuVariables::EnableDeveloperOptions)	{
 
 		for (int i = 0; i < CheatVariables::TestObjects::List.size(); i++) {
 			Unity::CGameObject* curObject = CheatVariables::TestObjects::List[i];
 			if (!curObject) continue;
-
-			if (CheatVariables::TestObjects::Chams) { // ATTENTION: some game can crash keeping that in loop enabled
-				Fns::RenderChams(curObject);
-			}
 
 			Unity::Vector3 rootPos = curObject->GetTransform()->GetPosition();
 			Unity::Vector3 headPos = rootPos; // HEAD OF THE PLAYER <-- THIS TRICK IS USELESS IF YOU KNOW THE HEAD POSITION
@@ -445,13 +529,13 @@ void CheatsLoop()
 
 			if (CheatVariables::TestObjects::Snapline)
 			{
-				ImColor color = CheatVariables::TestObjects::RainbowSnapline ? CheatVariables::RainbowColor : CheatVariables::TestObjects::SnaplineColor;
+				ImColor color = CheatVariables::TestObjects::SnaplineColor;
 
 				Fns::RenderESPSnapline(color, bottom);
 			}
 
 			if (CheatVariables::TestObjects::Box) {
-				ImColor color = CheatVariables::TestObjects::RainbowBox ? CheatVariables::RainbowColor : CheatVariables::TestObjects::BoxColor;
+				ImColor color = CheatVariables::TestObjects::BoxColor;
 
 				if (!Utils::WorldToScreen(headPos, top)) continue;
 				Fns::RenderESPBox(color, bottom, top);
@@ -462,6 +546,10 @@ void CheatsLoop()
 				Fns::ExecAimbot(curObject, top);
 			}
 
+			if (CheatVariables::TestObjects::Chams) { // ATTENTION: some game can crash keeping that in loop enabled
+				Fns::RenderChams(curObject);
+			}
+
 		}
 	}
 
@@ -469,10 +557,6 @@ void CheatsLoop()
 	{
 		Unity::CGameObject* curPlayer = CheatVariables::PlayersList[i];
 		if (!curPlayer) continue;
-
-		if (CheatMenuVariables::PlayerChams) { // ATTENTION: some game can crash keeping that in loop enabled
-			Fns::RenderChams(curPlayer);
-		}
 
 		Unity::Vector3 rootPos = curPlayer->GetTransform()->GetPosition();
 		Unity::Vector3 headPos = rootPos; // HEAD OF THE PLAYER <-- THIS TRICK IS USELESS IF YOU KNOW THE HEAD POSITION
@@ -515,6 +599,13 @@ void CheatsLoop()
 			}
 		}
 
+		if (CheatMenuVariables::PlayerSkeleton)
+		{
+			ImColor color = CheatMenuVariables::RainbowPlayerSkeleton ? CheatVariables::RainbowColor : CheatMenuVariables::PlayerSkeletonColor;
+
+			Fns::RenderESPSkeleton(color, curPlayer);
+		}
+
 		if (CheatMenuVariables::PlayersHealth) { // edit that by your self, is dirty
 			Fns::RenderHealthBar(curPlayer, bottom);
 		}
@@ -522,6 +613,10 @@ void CheatsLoop()
 		if (CheatMenuVariables::EnableAimbot) {
 			if (!Utils::WorldToScreen(headPos, top)) continue;
 			Fns::ExecAimbot(curPlayer, top);
+		}
+
+		if (CheatMenuVariables::PlayerChams) { // ATTENTION: some game can crash keeping that in loop enabled
+			Fns::RenderChams(curPlayer);
 		}
 	}
 

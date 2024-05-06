@@ -6,6 +6,8 @@
 namespace Variables
 {
 	std::string Prefix = "@kiocode";
+	const char* GameAssemblyName = "GameAssembly.dll";
+	const char* UnityPlayerName = "UnityPlayer.dll";
 	bool DEBUG = true;
 
 	namespace System 
@@ -24,6 +26,9 @@ namespace Variables
 	namespace Offsets
 	{
 		uintptr_t UnityEngineShader__FindShader_Offset = 0x0;
+		uintptr_t UnityEngineTime__GetTimeScale_Offset = 0x0;
+		uintptr_t UnityEngineTime__SetTimeScale_Offset = 0x0;
+		uintptr_t UnityEngineGameObject__CreatePrimitive_Offset = 0x0;
 		//uintptr_t Health__TakeDamage_Offset = 0x0;
 	}
 
@@ -37,6 +42,27 @@ namespace Variables
 
 		UnityEngine_Shader_o* ChamsShader;
 
+		std::vector<std::pair<int, int>> BonePairs = {
+			// left foot
+			{2, 1},
+			{1, 0},
+			{0, 3},
+			// right foot
+			{31, 30},
+			{30, 20},
+			{20, 3},
+			// Spine
+			{3, 4},
+			// Right Hand
+			{4, 9},
+			// Left Hand
+			{4, 7},
+			// Neck
+			{4, 5},
+			// Head
+			{5, 6},
+		};
+
 		ImVec4 Rainbow = ImVec4(0.0f, 0.0f, 0.0f, 0.0f); // Global rainbow color
 		ImColor RainbowColor = ImColor(255.0f / 255, 255.0f / 255, 255.0f / 255); // Global rainbow color
 
@@ -46,10 +72,8 @@ namespace Variables
 			char* Name = placeholder;
 			bool Chams = false;
 			bool Snapline = false;
-			bool RainbowSnapline = false;
 			ImColor SnaplineColor = ImColor(255.0f / 255, 255.0f / 255, 255.0f / 255);
 			bool Box = false;
-			bool RainbowBox = false;
 			ImColor BoxColor = ImColor(255.0f / 255, 255.0f / 255, 255.0f / 255);
 			bool Aimbot = false;
 		}
@@ -63,9 +87,14 @@ namespace Variables
 		bool ShowMenu = false;
 		bool Watermark = false;
 
+		bool CameraFovChanger = false;
+		float CameraCustomFOV = 80.0f;
+
 		bool EnableDeveloperOptions = false;
 
 		bool ShowInspector = false;
+
+		float GameSpeed = 1.0f;
 		
 		bool ShowMouse = true;
 		bool RainbowMouse = false;
@@ -86,6 +115,10 @@ namespace Variables
 		bool PlayerChams = false;
 		bool RainbowPlayerChams = false;
 
+		bool PlayerSkeleton = false;
+		bool RainbowPlayerSkeleton = false;
+		ImColor PlayerSkeletonColor = ImColor(255.0f / 255, 255.0f / 255, 255.0f / 255);
+		
 		bool PlayersBox = false;
 		bool RainbowPlayersBox = false;
 		ImColor PlayersBoxColor = ImColor(255.0f / 255, 255.0f / 255, 255.0f / 255);
@@ -115,9 +148,9 @@ namespace Variables
 
 		bool EnableAimbot = false;
 		bool AimbotFOVCheck = false;
-		float AimbotFOV = 100.0f;
-		float AimbotSmoothness = 1.0f;
-		float AimbotHeight = 5.0f;
+		float AimbotFOV = 80.0f;
+		float AimbotSmoothness = 0.5f;
+		float AimbotHeight = 3.0f;
 	}
 
 	namespace KEYS
