@@ -12,6 +12,7 @@ Youtube Channel: https://www.youtube.com/@kiocode
 - UNIVERSAL ESP
 - UNIVERSAL ESP CHARM
 - UNIVERSAL Box ESP
+- SEMIUNIVERSAL Skeleton ESP
 - Basic UNIVERSAL Aimbot (also with FOV)
 - Basic Inspector Components
 - Mouse Force Drawer
