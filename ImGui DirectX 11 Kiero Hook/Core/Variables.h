@@ -2,6 +2,7 @@
 #include <cstdint>
 #include <Utils/Includes.h>
 #include <string>
+#include <lua.hpp>
 
 namespace Variables
 {
@@ -28,8 +29,28 @@ namespace Variables
 		uintptr_t UnityEngineShader__FindShader_Offset = 0x0;
 		uintptr_t UnityEngineTime__GetTimeScale_Offset = 0x0;
 		uintptr_t UnityEngineTime__SetTimeScale_Offset = 0x0;
-		uintptr_t UnityEngineGameObject__CreatePrimitive_Offset = 0x0;
 		//uintptr_t Health__TakeDamage_Offset = 0x0;
+	}
+
+	namespace Lua {
+		lua_State* LuaState = nullptr;
+		bool ShowEditor = false;
+
+		char LuaScript[9999] = R"(
+print("Hello World!")
+
+local test = 0
+print(test)
+
+function TestFunction()
+	print("TestFunction")
+end
+
+TestFunction()
+
+-- call c++ function
+testFn()
+		)";
 	}
 
 	namespace CheatVariables 
@@ -150,7 +171,8 @@ namespace Variables
 		bool AimbotFOVCheck = false;
 		float AimbotFOV = 80.0f;
 		float AimbotSmoothness = 0.5f;
-		float AimbotHeight = 3.0f;
+		float FakeHeadPosDiff = 1;
+		float FakeFeetPosDiff = 1;
 	}
 
 	namespace KEYS

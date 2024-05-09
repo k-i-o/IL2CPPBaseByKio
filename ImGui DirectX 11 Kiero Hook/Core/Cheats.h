@@ -40,7 +40,7 @@ namespace Fns {
 			Material->CallMethodSafe<void*>("set_shader", CheatVariables::ChamsShader);
 			Material->CallMethodSafe<void*>("SetInt", IL2CPP::String::New("_Cull"), 0);
 			Material->CallMethodSafe<void*>("SetInt", IL2CPP::String::New("_ZTest"), 8);
-			Material->CallMethodSafe<void*>("SetInt", IL2CPP::String::New("_ZWrite"), 0);
+			Material->CallMethodSafe<void*>("SetInt", IL2CPP::String::New("_ZWrite"), 1);
 			Material->SetPropertyValue<Unity::Color>("color", Unity::Color(CheatVariables::Rainbow.x, CheatVariables::Rainbow.y, CheatVariables::Rainbow.z, CheatVariables::Rainbow.w));
 
 		}
@@ -254,6 +254,10 @@ void DrawMenu()
 		Utils::DrawInspector();
 	}
 
+	if (Lua::ShowEditor) {
+		Utils::DrawLuaEditor();
+	}
+
 	if (ImGui::Begin(Prefix.c_str(), nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoSavedSettings))
 	{
 		ImGui::SetWindowPos(ImVec2(500, 500), ImGuiCond_Once);
@@ -353,7 +357,8 @@ void DrawMenu()
 				{ // Aimbot
 					ImGui::Text("Aimbot Height");
 					ImGui::SameLine();
-					ImGui::SliderFloat("##Aim Height", &CheatMenuVariables::AimbotHeight, 0.0f, 100.0f);
+					ImGui::SliderFloat("##Head Diff Pos", &CheatMenuVariables::FakeHeadPosDiff, 0.0f, 100.0f);
+					ImGui::SliderFloat("##Feet Diff Pos", &CheatMenuVariables::FakeFeetPosDiff, 0.0f, 100.0f);
 
 					ImGui::Separator();
 					ImGui::Spacing();
@@ -472,7 +477,8 @@ void DrawMenu()
 					if (CheatMenuVariables::EnableDeveloperOptions)
 					{
 						ImGui::Indent();
-						ImGui::Checkbox("Show Inspector", &CheatMenuVariables::ShowInspector);
+						ImGui::Checkbox("Show Inspector", &CheatMenuVariables::ShowInspector);						
+						ImGui::Checkbox("Show Lua Editor", &Lua::ShowEditor);
 						ImGui::Spacing();
 
 						{ // test things
@@ -497,7 +503,6 @@ void DrawMenu()
 	}
 }
 
-
 void CheatsLoop()
 {
 	DWORD currentTime = GetTickCount64(); 
@@ -519,13 +524,18 @@ void CheatsLoop()
 			Unity::CGameObject* curObject = CheatVariables::TestObjects::List[i];
 			if (!curObject) continue;
 
-			Unity::Vector3 rootPos = curObject->GetTransform()->GetPosition();
-			Unity::Vector3 headPos = rootPos; // HEAD OF THE PLAYER <-- THIS TRICK IS USELESS IF YOU KNOW THE HEAD POSITION
-			headPos.y += CheatMenuVariables::AimbotHeight;
-			rootPos.y -= 0.2f;
+			Unity::CTransform* objectTransform = curObject->GetTransform();
+			if(!objectTransform) continue;
+
+			Unity::Vector3 objectPos = objectTransform->GetPosition();
+
+			Unity::Vector3 headPos = objectPos; // HEAD OF THE PLAYER <-- THIS TRICK IS USELESS IF YOU KNOW THE HEAD POSITION
+			headPos.y -= CheatMenuVariables::FakeHeadPosDiff;
+			Unity::Vector3 feetPos = objectPos; // FEET OF THE PLAYER <-- THIS TRICK IS USELESS IF YOU KNOW THE FEET POSITION
+			feetPos.y += CheatMenuVariables::FakeHeadPosDiff;
 
 			Vector2 top, bottom;
-			if (!Utils::WorldToScreen(rootPos, bottom)) continue;
+			if (!Utils::WorldToScreen(headPos, bottom)) continue;
 
 			if (CheatVariables::TestObjects::Snapline)
 			{
@@ -558,13 +568,18 @@ void CheatsLoop()
 		Unity::CGameObject* curPlayer = CheatVariables::PlayersList[i];
 		if (!curPlayer) continue;
 
-		Unity::Vector3 rootPos = curPlayer->GetTransform()->GetPosition();
-		Unity::Vector3 headPos = rootPos; // HEAD OF THE PLAYER <-- THIS TRICK IS USELESS IF YOU KNOW THE HEAD POSITION
-		headPos.y += CheatMenuVariables::AimbotHeight;
-		rootPos.y -= 0.2f;
+		Unity::CTransform* playerTransform = curPlayer->GetTransform();
+		if (!playerTransform) continue;
+
+		Unity::Vector3 playerPos = playerTransform->GetPosition();
+
+		Unity::Vector3 headPos = playerPos; // HEAD OF THE PLAYER <-- THIS TRICK IS USELESS IF YOU KNOW THE HEAD POSITION
+		headPos.y -= CheatMenuVariables::FakeHeadPosDiff;
+		Unity::Vector3 feetPos = playerPos; // FEET OF THE PLAYER <-- THIS TRICK IS USELESS IF YOU KNOW THE FEET POSITION
+		feetPos.y += CheatMenuVariables::FakeHeadPosDiff;
 
 		Vector2 top, bottom;
-		if (!Utils::WorldToScreen(rootPos, bottom)) continue;
+		if (!Utils::WorldToScreen(headPos, bottom)) continue;
 
 		if (CheatMenuVariables::PlayersSnapline)
 		{
@@ -626,7 +641,6 @@ void CheatsLoop()
 	}
 }
 
-
 void CacheManager()
 {
 	while (true)
@@ -639,12 +653,17 @@ void CacheManager()
 
 		// here maybe you can check for a localplayer, or look the Objects Cache method
 
-		if (CheatMenuVariables::EnableDeveloperOptions) {
-			Utils::ObjectsCache(&CheatVariables::TestObjects::List, CheatVariables::TestObjects::Name);
+		try {
+			if (CheatMenuVariables::EnableDeveloperOptions) {
+				Utils::ObjectsCache(&CheatVariables::TestObjects::List, CheatVariables::TestObjects::Name);
+			}
+			// check the method in Utils.cpp to understand how find localplayer with that variable
+			Utils::ObjectsCache(&CheatVariables::PlayersList, "UnityEngine.CharacterController");
 		}
-		// check the method in Utils.cpp to understand how find localplayer with that variable
-		Utils::ObjectsCache(&CheatVariables::PlayersList, "UnityEngine.CharacterController");
-		
+		catch (const std::exception& e) {
+			printf(e.what());
+		}
+
 		IL2CPP::Thread::Detach(m_pThisThread);
 		Sleep(2000);
 	}

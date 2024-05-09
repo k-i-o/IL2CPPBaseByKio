@@ -14,8 +14,10 @@
 #include <Libraries/PaternScan.hpp>
 #include <Core/HooksFunctions.h>
 #include <Core/Cheats.h>
+#include <Libraries/luaaa.hpp>
 
 using namespace Variables;
+using namespace luaaa;
 
 #pragma region ImGui
 	extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
@@ -111,6 +113,11 @@ static void HandleInputs() {
 		MH_DisableHook(MH_ALL_HOOKS);
 		MH_Uninitialize();
 		CheatMenuVariables::ShowMenu = false;
+
+		if (Lua::LuaState != NULL)
+		{
+			lua_close(Lua::LuaState);
+		}
 	}
 }
 
@@ -222,6 +229,15 @@ static HRESULT __stdcall hkPresent(IDXGISwapChain* pSwapChain, UINT SyncInterval
 	return oPresent(pSwapChain, SyncInterval, Flags);
 }
 
+void bindToLUA(lua_State* L)
+{
+	LuaModule(L)
+		.def("pi", 3.1415926535897932)
+		.fun("testFn", []() {
+			printf("Yoo bro\n");
+		});
+}
+
 static void Rainbow() {
 	float isRed = 0.0f, isGreen = 0.01f, isBlue = 0.0f;
 
@@ -259,6 +275,10 @@ static void Setup()
 	FindSigs();
 	EnableHooks();
 
+	Lua::LuaState = luaL_newstate();
+	luaL_openlibs(Lua::LuaState);
+	bindToLUA(Lua::LuaState);
+
 	kiero::bind(8, (void**)&oPresent, hkPresent);
 
 	// secondary threads
@@ -276,6 +296,7 @@ static DWORD WINAPI MainThread(LPVOID lpReserved)
 			Setup();
 			initHook = true;
 			System::InitIL2Cpp = true;
+
 		}
 	} while (!initHook);
 	return TRUE;

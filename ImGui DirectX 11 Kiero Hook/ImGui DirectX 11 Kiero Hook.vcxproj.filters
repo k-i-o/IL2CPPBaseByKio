@@ -103,11 +103,20 @@
     <ClInclude Include="Utils\SDK.h" />
     <ClInclude Include="Utils\Themes.h" />
     <ClInclude Include="Utils\Utils.h" />
+    <ClInclude Include="Libraries\luaaa.hpp" />
+    <ClInclude Include="Libraries\lauxlib.h" />
+    <ClInclude Include="Libraries\lua.h" />
+    <ClInclude Include="Libraries\lua.hpp" />
+    <ClInclude Include="Libraries\luaconf.h" />
+    <ClInclude Include="Libraries\lualib.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Libraries\kiero\minhook\dll_resources\MinHook.def" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Libraries\kiero\minhook\dll_resources\MinHook.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="Libraries\lua.lib" />
   </ItemGroup>
 </Project>

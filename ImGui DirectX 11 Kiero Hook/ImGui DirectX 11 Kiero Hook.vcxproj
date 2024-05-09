@@ -114,6 +114,7 @@
     <ClInclude Include="Libraries\kiero\minhook\src\hde\table32.h" />
     <ClInclude Include="Libraries\kiero\minhook\src\hde\table64.h" />
     <ClInclude Include="Libraries\kiero\minhook\src\trampoline.h" />
+    <ClInclude Include="Libraries\luaaa.hpp" />
     <ClInclude Include="Libraries\PaternScan.hpp" />
     <ClInclude Include="Libraries\Vectors\vec.h" />
     <ClInclude Include="Libraries\Vectors\vec2.h" />
@@ -205,6 +206,9 @@
   <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <VcpkgUseStatic>true</VcpkgUseStatic>
   </PropertyGroup>
+  <PropertyGroup Label="Vcpkg">
+    <VcpkgEnableManifest>true</VcpkgEnableManifest>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -259,6 +263,7 @@
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
+      <AdditionalIncludeDirectories>$(VCPKG_ROOT)\installed\x64-windows\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

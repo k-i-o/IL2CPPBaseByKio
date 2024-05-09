@@ -11,7 +11,10 @@
 #include <Libraries/Dumper.hpp>
 #include <Core/Variables.h>
 #include <Utils/SDK.h>
+#include <Libraries/luaaa.hpp>
 
+using namespace Variables;
+using namespace luaaa;
 
 namespace Utils
 {
@@ -271,6 +274,37 @@ namespace Utils
 		RectFilled(x, y, x + w, y + (((float)h / 100.0f) * (float)phealth), barColor, 0.0f, 0);
 	}
 
+	void DrawLuaEditor() {
+		ImGui::SetNextWindowSize(ImVec2(700.000f, 400.000f), ImGuiCond_Once);
+		if (!ImGui::Begin("Lua Editor by Kio", nullptr)) {
+			ImGui::End();
+			return;
+		}
+
+		ImGui::InputTextMultiline("##lua", Lua::LuaScript, sizeof(Lua::LuaScript), ImVec2(700, 300));
+
+		if(ImGui::Button("Execute##lua")) {
+			try {
+				int err = luaL_loadstring(Lua::LuaState, Lua::LuaScript);
+				if (err == 0)
+				{
+					err = lua_pcall(Lua::LuaState, 0, 0, 0);
+				}
+
+				if (err)
+				{
+					printf("\nlua err: %s", lua_tostring(Lua::LuaState, -1));
+					lua_pop(Lua::LuaState, 1);
+				}
+			}
+			catch (const std::exception& e) {
+				printf("lua err: %s", e.what());
+			}
+		}
+
+		ImGui::End();
+	}
+
 	void DrawInspector() {
 		ImGui::SetNextWindowSize(ImVec2(600.000f, 1000.000f), ImGuiCond_Once);
 		if (!ImGui::Begin("Inspector", nullptr, 2)) {
@@ -415,7 +449,7 @@ namespace Utils
 
 		originalList->clear();
 
-		auto list = Unity::Object::FindObjectsOfType<Unity::CComponent>(CName);
+		Unity::il2cppArray<Unity::CComponent*>* list = Unity::Object::FindObjectsOfType<Unity::CComponent>(CName);
 		if (!list) return;
 
 		Unity::il2cppArray<Unity::CComponent*>* possibleLocalPlayer = nullptr;
