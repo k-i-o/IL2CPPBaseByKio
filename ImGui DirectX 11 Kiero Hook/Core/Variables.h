@@ -11,6 +11,15 @@ namespace Variables
 	const char* UnityPlayerName = "UnityPlayer.dll";
 	bool DEBUG = true;
 
+	enum MenuTab
+	{
+		TAB_VISUALS,
+		TAB_AIM,
+		TAB_EXPLOITS,
+		TAB_MISC,
+		TAB_DEV
+	};
+
 	namespace System 
 	{
 		bool Init = false;

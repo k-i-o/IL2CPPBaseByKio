@@ -262,31 +262,38 @@ void DrawMenu()
 	{
 		ImGui::SetWindowPos(ImVec2(500, 500), ImGuiCond_Once);
 		ImGui::SetWindowSize(ImVec2(600, 300), ImGuiCond_Once);
-		static int tabIndex = 0;
+		static MenuTab tabIndex = TAB_VISUALS;
 		ImGui::SameLine();
 		if (ImGui::Button("Visual"))
 		{
-			tabIndex = 0;
+			tabIndex = TAB_VISUALS;
 		}
 		ImGui::SameLine();
 		if (ImGui::Button("Aim"))
 		{
-			tabIndex = 1;
+			tabIndex = TAB_AIM;
 		}
 		ImGui::SameLine();
 		if (ImGui::Button("Exploits"))
 		{
-			tabIndex = 2;
+			tabIndex = TAB_EXPLOITS;
 		}
 		ImGui::SameLine();
 		if (ImGui::Button("Misc"))
 		{
-			tabIndex = 3;
+			tabIndex = TAB_MISC;
+		}
+		if (DEBUG) {
+			ImGui::SameLine();
+			if (ImGui::Button("Developer"))
+			{
+				tabIndex = TAB_DEV;
+			}
 		}
 		ImGui::Separator();
 		ImGui::Spacing();
 		switch (tabIndex) {
-			case 0: {
+			case TAB_VISUALS: {
 
 				{ // ESP
 					ImGui::Checkbox("Players Snapline", &CheatMenuVariables::PlayersSnapline);
@@ -352,7 +359,7 @@ void DrawMenu()
 
 				break;
 			}
-			case 1: {
+			case TAB_AIM: {
 
 				{ // Aimbot
 					ImGui::Text("Aimbot Height");
@@ -375,7 +382,7 @@ void DrawMenu()
 				}
 				break;
 			}
-			case 2: {
+			case TAB_EXPLOITS: {
 
 				ImGui::Text("Game timescale");
 				ImGui::SliderFloat("##timescale", &CheatMenuVariables::GameSpeed, 0.0f, 100.0f);
@@ -419,7 +426,7 @@ void DrawMenu()
 				//}
 				break;
 			}
-			case 3: {
+			case TAB_MISC: {
 
 				{ // Render Things
 					ImGui::Checkbox("Show Watermark", &CheatMenuVariables::Watermark);
@@ -461,40 +468,33 @@ void DrawMenu()
 					ImGui::SliderFloat("##Camera Custom FOV", &CheatMenuVariables::CameraCustomFOV, 0.1f, 300.0f);
 				}
 
-				ImGui::Separator();
-				ImGui::Spacing();
+				break;
+			}
+			case TAB_DEV: {
 
-				//if(ImGui::Button("Create capsule")) {
-				//	Unity::CGameObject* capsule = Unity::GameObject::CreatePrimitive(Unity::GameObject::m_ePrimitiveType::Capsule);
-				//	capsule->GetTransform()->SetPosition(Unity::Vector3(0, 0, 0));
-				//}
+				ImGui::Checkbox("Enable Developer Options", &CheatMenuVariables::EnableDeveloperOptions);
 
-				if (DEBUG) {
-					ImGui::Text("Developer Options");
+				if (CheatMenuVariables::EnableDeveloperOptions)
+				{
+					ImGui::Indent();
+					ImGui::Checkbox("Show Inspector", &CheatMenuVariables::ShowInspector);
+					ImGui::Checkbox("Show Lua Editor", &Lua::ShowEditor);
+					ImGui::Spacing();
 
-					ImGui::Checkbox("Enable Developer Options", &CheatMenuVariables::EnableDeveloperOptions);
+					{ // test things
+						ImGui::Text("Test Objects");
+						ImGui::SameLine();
+						ImGui::InputTextWithHint("##SearchObject", "Name of a component...", CheatVariables::TestObjects::Name, 200);
 
-					if (CheatMenuVariables::EnableDeveloperOptions)
-					{
-						ImGui::Indent();
-						ImGui::Checkbox("Show Inspector", &CheatMenuVariables::ShowInspector);						
-						ImGui::Checkbox("Show Lua Editor", &Lua::ShowEditor);
-						ImGui::Spacing();
-
-						{ // test things
-							ImGui::Text("Test Objects");
-							ImGui::SameLine();
-							ImGui::InputTextWithHint("##SearchObject", "Name of a component...", CheatVariables::TestObjects::Name, 200);
-
-							ImGui::Checkbox("Test Objects Chams", &CheatVariables::TestObjects::Chams);
-							ImGui::SameLine();
-							ImGui::Checkbox("Test Objects Snapline", &CheatVariables::TestObjects::Snapline);
-							ImGui::Checkbox("Test Objects Box", &CheatVariables::TestObjects::Box);
-							ImGui::SameLine();
-							ImGui::Checkbox("Test Objects Aimbot", &CheatVariables::TestObjects::Aimbot);
-						}
-						ImGui::Unindent();
+						ImGui::Checkbox("Test Objects Chams", &CheatVariables::TestObjects::Chams);
+						ImGui::SameLine();
+						ImGui::Checkbox("Test Objects Snapline", &CheatVariables::TestObjects::Snapline);
+						ImGui::Checkbox("Test Objects Box", &CheatVariables::TestObjects::Box);
+						ImGui::SameLine();
+						ImGui::Checkbox("Test Objects Aimbot", &CheatVariables::TestObjects::Aimbot);
 					}
+					ImGui::Unindent();
+
 				}
 				break;
 			}
