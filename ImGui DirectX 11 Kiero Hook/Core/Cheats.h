@@ -439,7 +439,7 @@ void DrawMenu()
 					if (ImGui::IsItemHovered()) ImGui::SetTooltip("Color of the mouse");
 					ImGui::SameLine();
 					ImGui::Checkbox("##RGB1", &CheatMenuVariables::RainbowMouse);
-					ImGui::SameLine(); Utils::HelpMarker("Toggle rainbow color on the mouse");
+					if (ImGui::IsItemHovered()) ImGui::SetTooltip("Toggle rainbow color on the mouse");
 					ImGui::Text("Mouse Type");
 					ImGui::SameLine();
 					ImGui::SliderInt("##Mouse type", &CheatMenuVariables::MouseType, 0, 1);
