@@ -33,7 +33,7 @@ Youtube Channel: https://www.youtube.com/@kiocode
       - Remove `if (Lua::LuaState != NULL)` and the content
       - Remove `void bindToLUA(lua_State* L)` inside the function `HandleInputs`
       - Remove `Lua::LuaState = luaL_newstate(); luaL_openlibs(Lua::LuaState);	bindToLUA(Lua::LuaState);` inside `Setup`.
-   OR YOU CAN JUST DOWNLOAD VCPKG FOLLOWING JUST THE FIRST STEP OF THIS GUID [HERE](https://learn.microsoft.com/en-us/vcpkg/get_started/get-started-msbuild?pivots=shell-cmd#1---set-up-vcpkg) and writing in the cmd `set VCPKG_ROOT="C:\path\to\vcpkg"` and `set PATH=%VCPKG_ROOT%;%PATH%` (restart Visual Studio)
+2) OR YOU CAN JUST DOWNLOAD VCPKG FOLLOWING JUST THE FIRST STEP OF THIS GUID [HERE](https://learn.microsoft.com/en-us/vcpkg/get_started/get-started-msbuild?pivots=shell-cmd#1---set-up-vcpkg) and writing in the cmd `set VCPKG_ROOT="C:\path\to\vcpkg"` and `set PATH=%VCPKG_ROOT%;%PATH%` (restart Visual Studio)
 
 ## Usage
 
