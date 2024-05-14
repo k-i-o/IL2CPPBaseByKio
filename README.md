@@ -24,10 +24,10 @@ Youtube Channel: https://www.youtube.com/@kiocode
 ## Installation
 1) Clone the repo with `git clone https://github.com/k-i-o/IL2CPPBaseByKio`
 2) If you doesn't need Lua, just remove:
-  1. The luaaa.hpp inside Libraries
-  2. Delete the function DrawLuaEditor inside Core > Utils.h
-  3. Remove `#include <lua.hpp>` from Core > Variables.h and delete the namespace called Lua
-  4. In the main.cpp:
+   1. The luaaa.hpp inside Libraries
+   2. Delete the function DrawLuaEditor inside Core > Utils.h
+   3. Remove `#include <lua.hpp>` from Core > Variables.h and delete the namespace called Lua
+   4. In the main.cpp:
      - Remove `#include <Libraries/luaaa.hpp>`
      - Remove `using namespace luaaa;`
      - Remove `if (Lua::LuaState != NULL)` and the content
