@@ -24,16 +24,16 @@ Youtube Channel: https://www.youtube.com/@kiocode
 ## Installation
 1) Clone the repo with `git clone https://github.com/k-i-o/IL2CPPBaseByKio`
 2) If you doesn't need Lua, just remove:
-   1. The luaaa.hpp inside Libraries
-   2. Delete the function DrawLuaEditor inside Core > Utils.h
-   3. Remove `#include <lua.hpp>` from Core > Variables.h and delete the namespace called Lua
-   4. In the main.cpp:
+   - The luaaa.hpp inside Libraries
+   - Delete the function DrawLuaEditor inside Core > Utils.h
+   - Remove `#include <lua.hpp>` from Core > Variables.h and delete the namespace called Lua
+   - In the main.cpp:
       - Remove `#include <Libraries/luaaa.hpp>`
       - Remove `using namespace luaaa;`
       - Remove `if (Lua::LuaState != NULL)` and the content
       - Remove `void bindToLUA(lua_State* L)` inside the function `HandleInputs`
       - Remove `Lua::LuaState = luaL_newstate(); luaL_openlibs(Lua::LuaState);	bindToLUA(Lua::LuaState);` inside `Setup`.
-2) OR YOU CAN JUST DOWNLOAD VCPKG FOLLOWING JUST THE FIRST STEP OF THIS GUID [HERE](https://learn.microsoft.com/en-us/vcpkg/get_started/get-started-msbuild?pivots=shell-cmd#1---set-up-vcpkg) and writing in the cmd `set VCPKG_ROOT="C:\path\to\vcpkg"` and `set PATH=%VCPKG_ROOT%;%PATH%` (restart Visual Studio)
+   - OR YOU CAN JUST DOWNLOAD VCPKG FOLLOWING JUST THE FIRST STEP OF THIS GUID [HERE](https://learn.microsoft.com/en-us/vcpkg/get_started/get-started-msbuild?pivots=shell-cmd#1---set-up-vcpkg) and writing in the cmd `set VCPKG_ROOT="C:\path\to\vcpkg"` and `set PATH=%VCPKG_ROOT%;%PATH%` (restart Visual Studio)
 
 ## Usage
 
