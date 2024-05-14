@@ -25,7 +25,7 @@ Youtube Channel: https://www.youtube.com/@kiocode
 1) Clone the repo with `git clone https://github.com/k-i-o/IL2CPPBaseByKio`
 2) If you doesn't need Lua, just remove:
    - The luaaa.hpp inside Libraries
-   - Delete the function DrawLuaEditor inside Core > Utils.h
+   - Delete the function `DrawLuaEditor` inside Core > Utils.h
    - Remove `#include <lua.hpp>` from Core > Variables.h and delete the namespace called Lua
    - In the main.cpp:
       - Remove `#include <Libraries/luaaa.hpp>`
