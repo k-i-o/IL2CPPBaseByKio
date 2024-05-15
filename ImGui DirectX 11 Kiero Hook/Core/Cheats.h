@@ -532,7 +532,7 @@ void CheatsLoop()
 			Unity::Vector3 headPos = objectPos; // HEAD OF THE PLAYER <-- THIS TRICK IS USELESS IF YOU KNOW THE HEAD POSITION
 			headPos.y -= CheatMenuVariables::FakeHeadPosDiff;
 			Unity::Vector3 feetPos = objectPos; // FEET OF THE PLAYER <-- THIS TRICK IS USELESS IF YOU KNOW THE FEET POSITION
-			feetPos.y += CheatMenuVariables::FakeHeadPosDiff;
+			feetPos.y += CheatMenuVariables::FakeFeetPosDiff;
 
 			Vector2 top, bottom;
 			if (!Utils::WorldToScreen(headPos, bottom)) continue;
@@ -576,7 +576,7 @@ void CheatsLoop()
 		Unity::Vector3 headPos = playerPos; // HEAD OF THE PLAYER <-- THIS TRICK IS USELESS IF YOU KNOW THE HEAD POSITION
 		headPos.y -= CheatMenuVariables::FakeHeadPosDiff;
 		Unity::Vector3 feetPos = playerPos; // FEET OF THE PLAYER <-- THIS TRICK IS USELESS IF YOU KNOW THE FEET POSITION
-		feetPos.y += CheatMenuVariables::FakeHeadPosDiff;
+		feetPos.y += CheatMenuVariables::FakeFeetPosDiff;
 
 		Vector2 top, bottom;
 		if (!Utils::WorldToScreen(headPos, bottom)) continue;

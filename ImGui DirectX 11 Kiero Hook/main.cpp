@@ -235,6 +235,9 @@ void bindToLUA(lua_State* L)
 		.def("pi", 3.1415926535897932)
 		.fun("testFn", []() {
 			printf("Yoo bro\n");
+		})
+		.fun("test", []() {
+			ImGui::GetBackgroundDrawList()->AddCircle(ImVec2(System::ScreenCenter.x, System::ScreenCenter.y), 50, ImColor(255, 255, 255), 360);
 		});
 }
 
