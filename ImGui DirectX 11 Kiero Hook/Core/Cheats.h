@@ -364,8 +364,8 @@ void DrawMenu()
 				{ // Aimbot
 					ImGui::Text("Aimbot Height");
 					ImGui::SameLine();
-					ImGui::SliderFloat("##Head Diff Pos", &CheatMenuVariables::FakeHeadPosDiff, 0.0f, 100.0f);
-					ImGui::SliderFloat("##Feet Diff Pos", &CheatMenuVariables::FakeFeetPosDiff, 0.0f, 100.0f);
+					ImGui::SliderFloat("##Head Diff Pos", &CheatMenuVariables::FakeHeadPosDiff, -20.0f, 40.0f);
+					ImGui::SliderFloat("##Feet Diff Pos", &CheatMenuVariables::FakeFeetPosDiff, -20.0f, 40.0f);
 
 					ImGui::Separator();
 					ImGui::Spacing();
@@ -530,12 +530,12 @@ void CheatsLoop()
 			Unity::Vector3 objectPos = objectTransform->GetPosition();
 
 			Unity::Vector3 headPos = objectPos; // HEAD OF THE PLAYER <-- THIS TRICK IS USELESS IF YOU KNOW THE HEAD POSITION
-			headPos.y -= CheatMenuVariables::FakeHeadPosDiff;
+			headPos.y += CheatMenuVariables::FakeHeadPosDiff;
 			Unity::Vector3 feetPos = objectPos; // FEET OF THE PLAYER <-- THIS TRICK IS USELESS IF YOU KNOW THE FEET POSITION
-			feetPos.y += CheatMenuVariables::FakeFeetPosDiff;
+			feetPos.y -= CheatMenuVariables::FakeFeetPosDiff;
 
 			Vector2 top, bottom;
-			if (!Utils::WorldToScreen(headPos, bottom)) continue;
+			if (!Utils::WorldToScreen(feetPos, bottom)) continue;
 
 			if (CheatVariables::TestObjects::Snapline)
 			{
@@ -547,13 +547,15 @@ void CheatsLoop()
 			if (CheatVariables::TestObjects::Box) {
 				ImColor color = CheatVariables::TestObjects::BoxColor;
 
-				if (!Utils::WorldToScreen(headPos, top)) continue;
-				Fns::RenderESPBox(color, bottom, top);
+				if (Utils::WorldToScreen(headPos, top)) {
+					Fns::RenderESPBox(color, bottom, top);
+				}
 			}
 
 			if (CheatVariables::TestObjects::Aimbot) {
-				if (!Utils::WorldToScreen(headPos, top)) continue;
-				Fns::ExecAimbot(curObject, top);
+				if (Utils::WorldToScreen(headPos, top)) {
+					Fns::ExecAimbot(curObject, top);
+				}
 			}
 
 			if (CheatVariables::TestObjects::Chams) { // ATTENTION: some game can crash keeping that in loop enabled
@@ -574,12 +576,12 @@ void CheatsLoop()
 		Unity::Vector3 playerPos = playerTransform->GetPosition();
 
 		Unity::Vector3 headPos = playerPos; // HEAD OF THE PLAYER <-- THIS TRICK IS USELESS IF YOU KNOW THE HEAD POSITION
-		headPos.y -= CheatMenuVariables::FakeHeadPosDiff;
+		headPos.y += CheatMenuVariables::FakeHeadPosDiff;
 		Unity::Vector3 feetPos = playerPos; // FEET OF THE PLAYER <-- THIS TRICK IS USELESS IF YOU KNOW THE FEET POSITION
-		feetPos.y += CheatMenuVariables::FakeFeetPosDiff;
+		feetPos.y -= CheatMenuVariables::FakeFeetPosDiff;
 
 		Vector2 top, bottom;
-		if (!Utils::WorldToScreen(headPos, bottom)) continue;
+		if (!Utils::WorldToScreen(feetPos, bottom)) continue;
 
 		if (CheatMenuVariables::PlayersSnapline)
 		{
@@ -626,8 +628,9 @@ void CheatsLoop()
 		}
 
 		if (CheatMenuVariables::EnableAimbot) {
-			if (!Utils::WorldToScreen(headPos, top)) continue;
-			Fns::ExecAimbot(curPlayer, top);
+			if (!Utils::WorldToScreen(headPos, top)) {
+				Fns::ExecAimbot(curPlayer, top);
+			}
 		}
 
 		if (CheatMenuVariables::PlayerChams) { // ATTENTION: some game can crash keeping that in loop enabled

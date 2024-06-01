@@ -108,7 +108,7 @@ static void HandleInputs() {
 		CheatMenuVariables::ShowMenu = !CheatMenuVariables::ShowMenu;
 	}
 
-	if (GetKeyState(KEYS::DEATTACH_KEY) & 1)
+	if (GetAsyncKeyState(KEYS::DEATTACH_KEY) & 1)
 	{
 		MH_DisableHook(MH_ALL_HOOKS);
 		MH_Uninitialize();
