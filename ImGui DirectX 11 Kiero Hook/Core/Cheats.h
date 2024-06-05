@@ -664,7 +664,7 @@ void CacheManager()
 			Utils::ObjectsCache(&CheatVariables::PlayersList, "UnityEngine.CharacterController");
 		}
 		catch (const std::exception& e) {
-			printf(e.what());
+			std::cout << e.what() << std::endl;
 		}
 
 		IL2CPP::Thread::Detach(m_pThisThread);

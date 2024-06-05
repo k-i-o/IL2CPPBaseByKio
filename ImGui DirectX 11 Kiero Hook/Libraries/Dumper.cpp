@@ -1,4 +1,5 @@
 #include "Dumper.hpp"
+#include <iostream>
 
 std::vector<Unity::il2cppMethodInfo*> Dumper::DumpMethods(std::string component, std::string classname) {
     std::vector<Unity::il2cppMethodInfo*> methods_to_return;
@@ -22,7 +23,7 @@ std::vector<Unity::il2cppMethodInfo*> Dumper::DumpMethods(std::string component,
 
 std::vector<std::string> Dumper::DumpMethodsString(std::string component, std::string classname) {
     std::vector<std::string> methods_to_return;
-    printf("\nDumping methods of %s...\n", classname.c_str());
+    std::cout << "\nDumping methods of " << classname.c_str() << "...\n" << std::endl;
 
     std::vector<Unity::il2cppMethodInfo*> methods = Dumper::DumpMethods(component, classname);
 
@@ -33,7 +34,7 @@ std::vector<std::string> Dumper::DumpMethodsString(std::string component, std::s
 
         std::string name = method->m_pName;
         methods_to_return.push_back(name);
-        printf("--> %s\n", name.c_str());
+        std::cout << "--> "<< name.c_str() << "\n" << std::endl;
     }
 
     return methods_to_return;
@@ -61,7 +62,7 @@ std::vector<Unity::CComponent*> Dumper::DumpClasses(std::string component) {
 
 std::vector<std::string> Dumper::DumpClassesString(std::string component) {
     std::vector<std::string> classes_to_return;
-    printf("\nDumping classes of %s...\n", component.c_str());
+    std::cout << "\nDumping classes of "<< component.c_str() << "...\n" << std::endl;
 
     std::vector<Unity::CComponent*> classes = Dumper::DumpClasses(component);
     for (Unity::CComponent* class_obj : classes)
@@ -71,7 +72,7 @@ std::vector<std::string> Dumper::DumpClassesString(std::string component) {
 
         std::string name = std::string(class_obj->m_Object.m_pClass->m_pNamespace) + "::" + std::string(class_obj->m_Object.m_pClass->m_pName);
         classes_to_return.push_back(name);
-        printf("--> %s\n", name.c_str());
+        std::cout << "--> " << name.c_str() << "\n" << std::endl;
     }
     return classes_to_return;
 }
@@ -92,7 +93,7 @@ std::vector<Unity::CComponent*> Dumper::DumpComponents() {
 
 std::vector<std::string> Dumper::DumpComponentsString() {
     std::vector<std::string> compenents_to_return;
-    printf("\nDumping components...\n");
+    std::cout << "\nDumping components...\n" << std::endl;
 
     std::vector<Unity::CComponent*> components = Dumper::DumpComponents();
     for (Unity::CComponent* component : components)

@@ -901,7 +901,7 @@ static void ShowDemoWindowWidgets()
             for (int n = 0; n < 5; n++)
             {
                 char buf[32];
-                sprintf(buf, "Object %d", n);
+                sstd::cout << buf, "Object %d", n);
                 if (ImGui::Selectable(buf, selected == n))
                     selected = n;
             }
@@ -914,7 +914,7 @@ static void ShowDemoWindowWidgets()
             for (int n = 0; n < 5; n++)
             {
                 char buf[32];
-                sprintf(buf, "Object %d", n);
+                sstd::cout << buf, "Object %d", n);
                 if (ImGui::Selectable(buf, selection[n]))
                 {
                     if (!ImGui::GetIO().KeyCtrl)    // Clear selection when CTRL is not held
@@ -939,7 +939,7 @@ static void ShowDemoWindowWidgets()
             static bool selected[16] = {};
             for (int i = 0; i < 16; i++)
             {
-                char label[32]; sprintf(label, "Item %d", i);
+                char label[32]; sstd::cout << label, "Item %d", i);
                 if (ImGui::Selectable(label, &selected[i])) {}
                 ImGui::NextColumn();
             }
@@ -977,7 +977,7 @@ static void ShowDemoWindowWidgets()
                 {
                     ImVec2 alignment = ImVec2((float)x / 2.0f, (float)y / 2.0f);
                     char name[32];
-                    sprintf(name, "(%.1f,%.1f)", alignment.x, alignment.y);
+                    sstd::cout << name, "(%.1f,%.1f)", alignment.x, alignment.y);
                     if (x > 0) ImGui::SameLine();
                     ImGui::PushStyleVar(ImGuiStyleVar_SelectableTextAlign, alignment);
                     ImGui::Selectable(name, &selected[3*y+x], ImGuiSelectableFlags_None, ImVec2(80,80));
@@ -1110,7 +1110,7 @@ static void ShowDemoWindowWidgets()
                 average += values[n];
             average /= (float)IM_ARRAYSIZE(values);
             char overlay[32];
-            sprintf(overlay, "avg %f", average);
+            sstd::cout << overlay, "avg %f", average);
             ImGui::PlotLines("Lines", values, IM_ARRAYSIZE(values), values_offset, overlay, -1.0f, 1.0f, ImVec2(0,80));
         }
         ImGui::PlotHistogram("Histogram", arr, IM_ARRAYSIZE(arr), 0, NULL, 0.0f, 1.0f, ImVec2(0,80));
@@ -1150,7 +1150,7 @@ static void ShowDemoWindowWidgets()
 
         float progress_saturated = (progress < 0.0f) ? 0.0f : (progress > 1.0f) ? 1.0f : progress;
         char buf[32];
-        sprintf(buf, "%d/%d", (int)(progress_saturated*1753), 1753);
+        sstd::cout << buf, "%d/%d", (int)(progress_saturated*1753), 1753);
         ImGui::ProgressBar(progress, ImVec2(0.f,0.f), buf);
         ImGui::TreePop();
     }
@@ -1810,7 +1810,7 @@ static void ShowDemoWindowLayout()
             for (int i = 0; i < 100; i++)
             {
                 char buf[32];
-                sprintf(buf, "%03d", i);
+                sstd::cout << buf, "%03d", i);
                 ImGui::Button(buf, ImVec2(-FLT_MIN, 0.0f));
                 ImGui::NextColumn();
             }
@@ -2312,7 +2312,7 @@ static void ShowDemoWindowLayout()
                 if (n > 0) ImGui::SameLine();
                 ImGui::PushID(n + line * 1000);
                 char num_buf[16];
-                sprintf(num_buf, "%d", n);
+                sstd::cout << num_buf, "%d", n);
                 const char* label = (!(n%15)) ? "FizzBuzz" : (!(n%3)) ? "Fizz" : (!(n%5)) ? "Buzz" : num_buf;
                 float hue = n*0.05f;
                 ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(hue, 0.6f, 0.6f));
@@ -2573,7 +2573,7 @@ static void ShowDemoWindowPopups()
         // BeginPopupContextItem() will use the last item ID as the popup ID.
         // In addition here, we want to include your editable label inside the button label. We use the ### operator to override the ID (read FAQ about ID for details)
         static char name[32] = "Label1";
-        char buf[64]; sprintf(buf, "Button: %s###Button", name); // ### operator override ID ignoring the preceding label
+        char buf[64]; sstd::cout << buf, "Button: %s###Button", name); // ### operator override ID ignoring the preceding label
         ImGui::Button(buf);
         if (ImGui::BeginPopupContextItem())
         {
@@ -2701,7 +2701,7 @@ static void ShowDemoWindowColumns()
         for (int n = 0; n < 14; n++)
         {
             char label[32];
-            sprintf(label, "Item %d", n);
+            sstd::cout << label, "Item %d", n);
             if (ImGui::Selectable(label)) {}
             //if (ImGui::Button(label, ImVec2(-FLT_MIN,0.0f))) {}
             ImGui::NextColumn();
@@ -2723,7 +2723,7 @@ static void ShowDemoWindowColumns()
         for (int i = 0; i < 3; i++)
         {
             char label[32];
-            sprintf(label, "%04d", i);
+            sstd::cout << label, "%04d", i);
             if (ImGui::Selectable(label, selected == i, ImGuiSelectableFlags_SpanAllColumns))
                 selected = i;
             bool hovered = ImGui::IsItemHovered();
@@ -3056,7 +3056,7 @@ static void ShowDemoWindowMisc()
             for (int i = 0; i < ImGuiMouseCursor_COUNT; i++)
             {
                 char label[32];
-                sprintf(label, "Mouse cursor %d: %s", i, mouse_cursors_names[i]);
+                sstd::cout << label, "Mouse cursor %d: %s", i, mouse_cursors_names[i]);
                 ImGui::Bullet(); ImGui::Selectable(label, false);
                 if (ImGui::IsItemHovered() || ImGui::IsItemFocused())
                     ImGui::SetMouseCursor(i);
@@ -3657,7 +3657,7 @@ struct ExampleAppConsole
         char buf[1024];
         va_list args;
         va_start(args, fmt);
-        vsnprintf(buf, IM_ARRAYSIZE(buf), fmt, args);
+        vsnstd::cout << buf, IM_ARRAYSIZE(buf), fmt, args);
         buf[IM_ARRAYSIZE(buf)-1] = 0;
         va_end(args);
         Items.push_back(Strdup(buf));
@@ -4107,7 +4107,7 @@ static void ShowExampleAppLayout(bool* p_open)
         for (int i = 0; i < 100; i++)
         {
             char label[128];
-            sprintf(label, "MyObject %d", i);
+            sstd::cout << label, "MyObject %d", i);
             if (ImGui::Selectable(label, selected == i))
                 selected = i;
         }
@@ -4407,7 +4407,7 @@ static void ShowExampleAppWindowTitles(bool*)
 
     // Using "###" to display a changing title but keep a static identifier "AnimatedTitle"
     char buf[128];
-    sprintf(buf, "Animated title %c %d###AnimatedTitle", "|/-\\"[(int)(ImGui::GetTime() / 0.25f) & 3], ImGui::GetFrameCount());
+    sstd::cout << buf, "Animated title %c %d###AnimatedTitle", "|/-\\"[(int)(ImGui::GetTime() / 0.25f) & 3], ImGui::GetFrameCount());
     ImGui::SetNextWindowPos(ImVec2(100, 300), ImGuiCond_FirstUseEver);
     ImGui::Begin(buf);
     ImGui::Text("This window has a changing title.");
@@ -4612,7 +4612,7 @@ struct MyDocument
             return;
 
         char buf[256];
-        sprintf(buf, "Save %s", doc->Name);
+        sstd::cout << buf, "Save %s", doc->Name);
         if (ImGui::MenuItem(buf, "CTRL+S", false, doc->Open))
             doc->DoSave();
         if (ImGui::MenuItem("Close", "CTRL+W", false, doc->Open))

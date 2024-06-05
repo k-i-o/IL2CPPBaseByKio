@@ -828,7 +828,7 @@ CODE
 #pragma clang diagnostic ignored "-Wzero-as-null-pointer-constant"  // warning : zero as null pointer constant              // some standard header variations use #define NULL 0
 #endif
 #if __has_warning("-Wdouble-promotion")
-#pragma clang diagnostic ignored "-Wdouble-promotion"       // warning: implicit conversion from 'float' to 'double' when passing argument to function  // using printf() is a misery with this as C++ va_arg ellipsis changes float to double.
+#pragma clang diagnostic ignored "-Wdouble-promotion"       // warning: implicit conversion from 'float' to 'double' when passing argument to function  // using std::cout << ) is a misery with this as C++ va_arg ellipsis changes float to double.
 #endif
 #elif defined(__GNUC__)
 // We disable -Wpragmas because GCC doesn't provide an has_warning equivalent and some forks/patches may not following the warning/version association.
@@ -1275,8 +1275,8 @@ const char* ImStrSkipBlank(const char* str)
 }
 
 // A) MSVC version appears to return -1 on overflow, whereas glibc appears to return total count (which may be >= buf_size).
-// Ideally we would test for only one of those limits at runtime depending on the behavior the vsnprintf(), but trying to deduct it at compile time sounds like a pandora can of worm.
-// B) When buf==NULL vsnprintf() will return the output size.
+// Ideally we would test for only one of those limits at runtime depending on the behavior the vsnstd::cout << ), but trying to deduct it at compile time sounds like a pandora can of worm.
+// B) When buf==NULL vsnstd::cout << ) will return the output size.
 #ifndef IMGUI_DISABLE_DEFAULT_FORMAT_FUNCTIONS
 
 // We support stb_sprintf which is much faster (see: https://github.com/nothings/stb/blob/master/stb_sprintf.h)
@@ -1298,9 +1298,9 @@ int ImFormatString(char* buf, size_t buf_size, const char* fmt, ...)
     va_list args;
     va_start(args, fmt);
 #ifdef IMGUI_USE_STB_SPRINTF
-    int w = stbsp_vsnprintf(buf, (int)buf_size, fmt, args);
+    int w = stbsp_vsnstd::cout << buf, (int)buf_size, fmt, args);
 #else
-    int w = vsnprintf(buf, buf_size, fmt, args);
+    int w = vsnstd::cout << buf, buf_size, fmt, args);
 #endif
     va_end(args);
     if (buf == NULL)
@@ -1314,9 +1314,9 @@ int ImFormatString(char* buf, size_t buf_size, const char* fmt, ...)
 int ImFormatStringV(char* buf, size_t buf_size, const char* fmt, va_list args)
 {
 #ifdef IMGUI_USE_STB_SPRINTF
-    int w = stbsp_vsnprintf(buf, (int)buf_size, fmt, args);
+    int w = stbsp_vsnstd::cout << buf, (int)buf_size, fmt, args);
 #else
-    int w = vsnprintf(buf, buf_size, fmt, args);
+    int w = vsnstd::cout << buf, buf_size, fmt, args);
 #endif
     if (buf == NULL)
         return w;
@@ -2013,7 +2013,7 @@ bool ImGuiTextFilter::PassFilter(const char* text, const char* text_end) const
 // [SECTION] ImGuiTextBuffer
 //-----------------------------------------------------------------------------
 
-// On some platform vsnprintf() takes va_list by reference and modifies it.
+// On some platform vsnstd::cout << ) takes va_list by reference and modifies it.
 // va_copy is the 'correct' way to copy a va_list but Visual Studio prior to 2013 doesn't have it.
 #ifndef va_copy
 #if defined(__GNUC__) || defined(__clang__)

@@ -97,11 +97,11 @@ namespace Utils
 	}
 
 	void Log(uintptr_t address, const char* className, const char* methodName) {
-		printf("[ LOG ] %s$$%s: 0x%llX\n", className, methodName, address);
+		std::cout << "[ LOG ] " << className << "$$" << methodName << ": " << address << "\n" << std::endl;
 	}
 
 	void LogError(const char* text, const char* name) {
-		printf("[ LOG ] %s: %s\n", text, name);
+		std::cout << "[ LOG ]  " << text << ":  " << name << "\n" << std::endl;
 	}
 
 	float GetDistance(Unity::Vector3 a, Unity::Vector3 b)
@@ -293,12 +293,12 @@ namespace Utils
 
 				if (err)
 				{
-					printf("\nlua err: %s", lua_tostring(Lua::LuaState, -1));
+					std::cout << "\nlua err: " << lua_tostring(Lua::LuaState, -1) << std::endl;
 					lua_pop(Lua::LuaState, 1);
 				}
 			}
 			catch (const std::exception& e) {
-				printf("lua err: %s", e.what());
+				std::cout << "lua err: " << e.what() << std::endl;
 			}
 		}
 
