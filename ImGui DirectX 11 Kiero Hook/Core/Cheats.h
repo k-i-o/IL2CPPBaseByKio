@@ -215,7 +215,7 @@ namespace Fns {
 
 		CheatVariables::SpinbotSupport = (CheatVariables::SpinbotSupport + 150) % 1000;
 
-		Utils::MouseMove(CheatVariables::SpinbotSupport, System::MousePos.y, System::ScreenSize.x, System::ScreenSize.y, 0);
+		Utils::MouseMove(CheatVariables::SpinbotSupport, System::ScreenSize.y, System::ScreenSize.x, System::ScreenSize.y, 0);
 
 		return true;
 	}
