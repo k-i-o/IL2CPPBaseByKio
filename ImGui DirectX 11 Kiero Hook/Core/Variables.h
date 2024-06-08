@@ -110,6 +110,7 @@ testFn()
 
 		static DWORD LastShotTime = 0;
 		static DWORD LastTick = 0;
+		static int SpinbotSupport = 0;
 	}
 
 	namespace CheatMenuVariables {
@@ -158,6 +159,8 @@ testFn()
 		bool RainbowBotChecker = false;
 		ImColor BotCheckerColor = ImColor(0, 0, 255);
 		bool BotCheckerText = true;
+
+		bool Spinbot = false;
 
 		bool PlayersHealth = false;
 
