@@ -374,9 +374,12 @@ void DrawMenu()
 
 				{ // Aimbot
 					ImGui::Text("Aimbot Height");
+					ImGui::Text("Head Diff Pos");
 					ImGui::SameLine();
-					ImGui::SliderFloat("##Head Diff Pos", &CheatMenuVariables::FakeHeadPosDiff, -20.0f, 40.0f);
-					ImGui::SliderFloat("##Feet Diff Pos", &CheatMenuVariables::FakeFeetPosDiff, -20.0f, 40.0f);
+					ImGui::SliderFloat("##Head Pos", &CheatMenuVariables::FakeHeadPosDiff, -10.0f, 30.0f);
+					ImGui::Text("Feet Diff Pos");
+					ImGui::SameLine();
+					ImGui::SliderFloat("##Feet Pos", &CheatMenuVariables::FakeFeetPosDiff, -10.0f, 30.0f);
 
 					ImGui::Separator();
 					ImGui::Spacing();
