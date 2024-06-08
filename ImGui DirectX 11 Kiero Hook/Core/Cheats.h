@@ -7,6 +7,7 @@
 #include <Utils/SDK.h>
 #include <Utils/Themes.h>
 #include <Utils/Utils.h>
+#include <Core/InternalGameFunctions.h>
 
 using namespace Variables;
 
@@ -208,6 +209,16 @@ namespace Fns {
 
 		return true;
 	}
+
+	bool Spinbot() {
+		if (CheatMenuVariables::ShowMenu) return false;
+
+		CheatVariables::SpinbotSupport = (CheatVariables::SpinbotSupport + 150) % 1000;
+
+		Utils::MouseMove(CheatVariables::SpinbotSupport, System::ScreenSize.y, System::ScreenSize.x, System::ScreenSize.y, 0);
+
+		return true;
+	}
 }
 
 void DrawMouse() {
@@ -396,6 +407,8 @@ void DrawMenu()
 					GameFunctions::UnityEngine_Time__set_timeScale(CheatMenuVariables::GameSpeed);
 				}
 
+				ImGui::Checkbox("Spinbot", &CheatMenuVariables::Spinbot);
+
 				//{ // GodMode
 				//	ImGui::Checkbox("GodMode (for you and bots)", &CheatMenuVariables::GodMode);
 				//}
@@ -518,6 +531,10 @@ void CheatsLoop()
 		}
 	}
 
+	if (CheatMenuVariables::Spinbot) {
+		Fns::Spinbot();
+	}
+
 	if (CheatMenuVariables::EnableDeveloperOptions)	{
 
 		for (int i = 0; i < CheatVariables::TestObjects::List.size(); i++) {
@@ -628,7 +645,7 @@ void CheatsLoop()
 		}
 
 		if (CheatMenuVariables::EnableAimbot) {
-			if (!Utils::WorldToScreen(headPos, top)) {
+			if (Utils::WorldToScreen(headPos, top)) {
 				Fns::ExecAimbot(curPlayer, top);
 			}
 		}
@@ -664,7 +681,7 @@ void CacheManager()
 			Utils::ObjectsCache(&CheatVariables::PlayersList, "UnityEngine.CharacterController");
 		}
 		catch (const std::exception& e) {
-			printf(e.what());
+			std::cout << e.what() << std::endl;
 		}
 
 		IL2CPP::Thread::Detach(m_pThisThread);

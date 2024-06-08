@@ -6,32 +6,8 @@
 
 // my includes
 #include <Libraries/Il2cpp_Resolver/il2cpp_resolver.hpp>
-#include <Libraries/Vectors/vec.h>
-#include <Libraries/Vectors/vec2.h>
 
 using namespace Variables;
-
-namespace GameFunctions
-{
-	UnityEngine_Shader_o* UnityEngine_Shader__Find(Unity::System_String* name)
-	{
-		UnityEngine_Shader_o* (UNITY_CALLING_CONVENTION t)(Unity::System_String*);
-		return reinterpret_cast<decltype(t)>(Offsets::UnityEngineShader__FindShader_Offset)(name);
-	}
-
-	float UnityEngine_Time__get_timeScale()
-	{
-		float (UNITY_CALLING_CONVENTION t)();
-		return reinterpret_cast<decltype(t)>(Offsets::UnityEngineTime__GetTimeScale_Offset)();
-	}
-
-	void UnityEngine_Time__set_timeScale(float value)
-	{
-		void (UNITY_CALLING_CONVENTION t)(float);
-		reinterpret_cast<decltype(t)>(Offsets::UnityEngineTime__SetTimeScale_Offset)(value);
-	}
-
-}
 
 namespace HooksFunctions
 {

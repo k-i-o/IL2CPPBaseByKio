@@ -71,35 +71,35 @@ static void InitImGui()
 
 static void InitVars() {
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x03);
-	printf("\n*******************************************************************************");
+	std::cout << "\n*******************************************************************************" << std::endl;
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_GREEN);
-	printf(R"(  
+	std::cout << R"(  
      __  __     __     ______     ______     ______     _____     ______	
     /\ \/ /    /\ \   /\  __ \   /\  ___\   /\  __ \   /\  __-.  /\  ___\	
     \ \  _'-.  \ \ \  \ \ \/\ \  \ \ \____  \ \ \/\ \  \ \ \/\ \ \ \  __\   
      \ \_\ \_\  \ \_\  \ \_____\  \ \_____\  \ \_____\  \ \____-  \ \_____\	
       \/_/\/_/   \/_/   \/_____/   \/_____/   \/_____/   \/____/   \/_____/
-	)");
+	)" << std::endl;
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x03);
-	printf("\n*******************************************************************************\n");
+	std::cout << "\n*******************************************************************************\n" << std::endl;
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0F);
 
 	if (IL2CPP::Initialize(true)) {
-		printf("[ %s ] Il2Cpp initialized\n", Prefix);
+		std::cout << "[ " << Prefix << " ] Il2Cpp initialized\n" << std::endl;
 	}
 	else {
-		printf("[ %s ] Il2Cpp initialize failed, quitting...", Prefix);
+		std::cout << "[ " << Prefix << " ] Il2Cpp initialize failed, quitting..." << std::endl;
 		Sleep(300);
 		exit(0);
 	}
 	SDK::Base = (uintptr_t)GetModuleHandleA(NULL);
-	printf("[ %s ] Base Address --> 0x%llX\n", Prefix, SDK::Base);
+	std::cout << "[ " << Prefix << " ] Base Address --> " << SDK::UnityPlayer << "\n" << std::endl;
 	SDK::GameAssembly = (uintptr_t)GetModuleHandleA(GameAssemblyName);
-	printf("[ %s ] GameAssembly Base Address --> 0x%llX\n", Prefix, SDK::GameAssembly);
+	std::cout << "[ " << Prefix << " ] GameAssembly Base Address --> " << SDK::UnityPlayer << "\n" << std::endl;
 	SDK::UnityPlayer = (uintptr_t)GetModuleHandleA(UnityPlayerName);
-	printf("[ %s ] UnityPlayer Base Address --> 0x%llX\n", Prefix, SDK::UnityPlayer);
-	printf("=============================================================================\n");
-	printf("\n");
+	std::cout << "[ " << Prefix << " ] UnityPlayer Base Address --> " << SDK::UnityPlayer << "\n" << std::endl;
+	std::cout << "=============================================================================\n" << std::endl;
+	std::cout << "\n" << std::endl;
 }
 
 static void HandleInputs() {
@@ -234,7 +234,7 @@ void bindToLUA(lua_State* L)
 	LuaModule(L)
 		.def("pi", 3.1415926535897932)
 		.fun("testFn", []() {
-			printf("Yoo bro\n");
+			std::cout << "Yoo bro\n" << std::endl;
 		})
 		.fun("test", []() {
 			ImGui::GetBackgroundDrawList()->AddCircle(ImVec2(System::ScreenCenter.x, System::ScreenCenter.y), 50, ImColor(255, 255, 255), 360);
